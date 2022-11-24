@@ -4,16 +4,29 @@ const dotenv = require("dotenv");
 const helmet = require("helmet");
 const cors = require("cors");
 const morgan = require("morgan");
+const bodyParser = require("body-parser");
+
+const PORT = 8080;
 
 const app = express();
-app.use(cors());
 dotenv.config();
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cors());
+app.use(morgan("common"));
+app.use(helmet());
+
+//ROUTES
+const usersRouter = require("./routes/users");
+const authRouter = require("./routes/auth");
+
+app.use("/users", usersRouter);
+app.use("/auth", authRouter);
 
 mongoose.connect(process.env.DATABASE_URL, () => {
   console.log("Connected with DB! :)");
 });
-
-const PORT = 8080;
 
 app.listen(PORT, () => {
   console.log("Backend is alive!");
