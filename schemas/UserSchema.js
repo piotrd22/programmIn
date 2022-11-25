@@ -25,6 +25,24 @@ const UserSchema = new Schema(
       required: true,
       min: 8,
     },
+    gender: {
+      type: String,
+      required: true,
+    },
+    nationality: {
+      type: String,
+      required: true,
+    },
+    description: {
+      type: String,
+      max: 200,
+      default: "",
+    },
+    githuburl: {
+      type: String,
+      max: 100,
+      default: "",
+    },
     followers: {
       type: Array,
       default: [],

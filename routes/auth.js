@@ -7,11 +7,14 @@ router.post("/signup", async (req, res) => {
     surname: req.body.surname,
     email: req.body.email,
     password: req.body.password,
+    gender: req.body.gender,
+    nationality: req.body.nationality,
   });
 
   try {
     await newUser.save();
     res.status(200);
+    res.send(newUser);
   } catch (error) {
     console.log(error);
   }
