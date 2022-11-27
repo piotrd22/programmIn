@@ -32,7 +32,21 @@ router.put("/:id", async (req, res) => {
       return res.status(500).send(error);
     }
   } else {
-    return res.status(403), send("you can't update another account");
+    return res.status(403).send("you can't update another account");
+  }
+});
+
+router.delete("/:id", async (req, res) => {
+  if (req.params.id === req.body.userId || req.body.admin) {
+    try {
+      await User.findByIdAndDelete(req.params.id);
+      res.status(200);
+      res.send("User has been deleted");
+    } catch (error) {
+      return res.status(500).send(error);
+    }
+  } else {
+    return res.status(403).send("you can't delete another account");
   }
 });
 
