@@ -13,7 +13,6 @@ router.post("/signup", async (req, res) => {
       email: req.body.email,
       password: hashedPassw,
       gender: req.body.gender,
-      nationality: req.body.nationality,
     });
 
     await newUser.save();
