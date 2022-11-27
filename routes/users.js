@@ -7,7 +7,7 @@ router.put("/:id", async (req, res) => {
     if (req.body.password) {
       try {
         const salt = await bcrypt.genSalt(10);
-        const hashedPassw = await bcrypt.hash(req.body.password, salt);
+        req.body.password = await bcrypt.hash(req.body.password, salt);
       } catch (error) {
         return res.status(500).send(error);
       }
