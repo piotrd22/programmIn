@@ -35,7 +35,7 @@ const UserSchema = new Schema(
       default: "",
     },
     skills: {
-      type: Array,
+      type: String,
       default: "",
     },
     education: {
