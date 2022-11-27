@@ -2,6 +2,15 @@ const router = require("express").Router();
 const bcrypt = require("bcrypt");
 const User = require("../schemas/UserSchema");
 
+router.get("/:id", async (req, res) => {
+  try {
+    res.status(200);
+    res.send(await User.findById(req.params.id));
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
 router.put("/:id", async (req, res) => {
   if (req.params.id === req.body.userId || req.body.admin) {
     if (req.body.password) {
