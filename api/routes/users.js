@@ -74,7 +74,9 @@ router.put("/:id/unfollow", async (req, res) => {
       const currUser = await User.findById(req.body.userId);
       if (currUser.following.filter((x) => x === req.params.id).length === 1) {
         await currUser.updateOne({ $pull: { following: req.params.id } });
-        await userToUnfollow.updateOne({ $pull: { followers: req.body.userId } });
+        await userToUnfollow.updateOne({
+          $pull: { followers: req.body.userId },
+        });
         res.status(200).send("User has been unfollowed");
       } else {
         res.status(403).send("You can't unffolow an unfollowed account");
