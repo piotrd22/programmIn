@@ -6,8 +6,6 @@ const cors = require("cors");
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
 
-const PORT = 8080;
-
 const app = express();
 dotenv.config();
 
@@ -28,6 +26,6 @@ mongoose.connect(process.env.DATABASE_URL, () => {
   console.log("Connected with DB! :)");
 });
 
-app.listen(PORT, () => {
+app.listen(process.env.PORT, () => {
   console.log("Backend is alive!");
 });
