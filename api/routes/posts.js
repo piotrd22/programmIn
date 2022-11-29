@@ -5,4 +5,6 @@ router.post("/", postsControllers.createPost);
 
 router.delete("/:id", postsControllers.deletePost);
 
+router.put("/:id", postsControllers.updatePost);
+
 module.exports = router;

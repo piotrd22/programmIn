@@ -24,4 +24,20 @@ const deletePost = async (req, res) => {
   }
 };
 
-module.exports = { createPost, deletePost };
+const updatePost = async (req, res) => {
+  try {
+    const currPost = await Post.findById(req.params.id);
+    if (currPost.userId === req.body.userId) {
+      await Post.findByIdAndUpdate(req.params.id, {
+        $set: req.body,
+      });
+      res.status(200).send("Post has been updated");
+    } else {
+      res.status(403).send("you can't update not your post");
+    }
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
+
+module.exports = { createPost, deletePost, updatePost };
