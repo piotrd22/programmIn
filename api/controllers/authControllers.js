@@ -3,15 +3,17 @@ const User = require("../schemas/UserSchema");
 
 const signup = async (req, res) => {
   try {
+    const { name, surname, email, password, gender } = req.body;
+
     const salt = await bcrypt.genSalt(10);
-    const hashedPassw = await bcrypt.hash(req.body.password, salt);
+    const hashedPassw = await bcrypt.hash(password, salt);
 
     const newUser = new User({
-      name: req.body.name,
-      surname: req.body.surname,
-      email: req.body.email,
+      name: name,
+      surname: surname,
+      email: email,
       password: hashedPassw,
-      gender: req.body.gender,
+      gender: gender,
     });
 
     await newUser.save();
@@ -24,17 +26,16 @@ const signup = async (req, res) => {
 
 const signin = async (req, res) => {
   try {
+    const { email, password } = req.body;
+
     const log_user = await User.findOne({
-      email: req.body.email,
+      email: email,
     });
     if (res.status(404) && !log_user) {
       res.send("404 USER NOT FOUND");
     }
 
-    const userPassw = await bcrypt.compare(
-      req.body.password,
-      log_user.password
-    );
+    const userPassw = await bcrypt.compare(password, log_user.password);
     if (res.status(404) && !userPassw) {
       res.send("404 WRONG PASSWORD");
     }

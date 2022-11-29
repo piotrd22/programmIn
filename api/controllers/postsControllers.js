@@ -12,8 +12,10 @@ const createPost = async (req, res) => {
 
 const deletePost = async (req, res) => {
   try {
+    const { userId } = req.body;
+
     const currPost = await Post.findById(req.params.id);
-    if (currPost.userId === req.body.userId) {
+    if (currPost.userId === userId) {
       await Post.findByIdAndDelete(req.params.id);
       res.status(200).send("Post has been deleted");
     } else {
@@ -26,8 +28,10 @@ const deletePost = async (req, res) => {
 
 const updatePost = async (req, res) => {
   try {
+    const { userId } = req.body;
+
     const currPost = await Post.findById(req.params.id);
-    if (currPost.userId === req.body.userId) {
+    if (currPost.userId === userId) {
       await Post.findByIdAndUpdate(req.params.id, {
         $set: req.body,
       });
