@@ -20,9 +20,9 @@ const usersRouter = require("./routes/users");
 const authRouter = require("./routes/auth");
 const postsRoter = require("./routes/posts");
 
-app.use("/users", usersRouter);
-app.use("/auth", authRouter);
-app.use("/posts", postsRoter);
+app.use("/api/users", usersRouter);
+app.use("/api/auth", authRouter);
+app.use("/api/posts", postsRoter);
 
 mongoose.connect(process.env.DATABASE_URL, () => {
   console.log("Connected with DB! :)");
