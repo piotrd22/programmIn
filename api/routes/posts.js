@@ -1,6 +1,5 @@
 const router = require("express").Router();
 const postsControllers = require("../controllers/postsControllers");
-const { route } = require("./users");
 
 router.get("/:id", postsControllers.getPost);
 
@@ -15,5 +14,7 @@ router.put("/:id/like", postsControllers.likePost);
 router.put("/:id/comment", postsControllers.commentPost);
 
 router.put("/:id/uncomment", postsControllers.uncommentPost);
+
+router.get("/home/posts", postsControllers.homePosts);
 
 module.exports = router;

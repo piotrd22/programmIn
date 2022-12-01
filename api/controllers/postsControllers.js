@@ -1,4 +1,5 @@
 const Post = require("../schemas/PostSchema");
+const User = require("../schemas/UserSchema");
 
 const getPost = async (req, res) => {
   try {
@@ -98,6 +99,24 @@ const uncommentPost = async (req, res) => {
   }
 };
 
+const homePosts = async (req, res) => {
+  try {
+    const { userId } = req.body;
+
+    const currUser = await User.findById(userId);
+    const currUserPosts = await Post.find({ userId: userId });
+    const followersPosts = await Promise.all(
+      currUser.following.map((id) => {
+        return Post.find({ userId: id });
+      })
+    );
+
+    res.status(200).send([...currUserPosts, ...followersPosts]);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
+
 module.exports = {
   getPost,
   createPost,
@@ -106,4 +125,5 @@ module.exports = {
   likePost,
   commentPost,
   uncommentPost,
+  homePosts,
 };
