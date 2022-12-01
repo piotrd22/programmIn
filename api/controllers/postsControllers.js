@@ -44,4 +44,56 @@ const updatePost = async (req, res) => {
   }
 };
 
-module.exports = { createPost, deletePost, updatePost };
+const likePost = async (req, res) => {
+  try {
+    const { userId } = req.body;
+    const post = await Post.findById(req.params.id);
+
+    if (post.likes.filter((x) => x === userId).length === 1) {
+      await post.updateOne({ $pull: { likes: userId } });
+      res.status(200).send("Post has been disliked");
+    } else {
+      await post.updateOne({ $push: { likes: userId } });
+      res.status(200).send("Post has been liked");
+    }
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
+
+const commentPost = async (req, res) => {
+  try {
+    const { userId, desc } = req.body;
+    const post = await Post.findById(req.params.id);
+
+    await post.updateOne({
+      $push: { comments: { postedBy: userId, desc: desc } },
+    });
+    res.status(200).send("Post has been commented");
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
+
+const uncommentPost = async (req, res) => {
+  try {
+    const { userId, desc } = req.body;
+    const post = await Post.findById(req.params.id);
+
+    await post.updateOne({
+      $pull: { comments: { postedBy: userId, desc: desc } },
+    });
+    res.status(200).send("Post has been uncommented");
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
+
+module.exports = {
+  createPost,
+  deletePost,
+  updatePost,
+  likePost,
+  commentPost,
+  uncommentPost,
+};
