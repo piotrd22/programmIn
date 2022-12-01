@@ -1,5 +1,14 @@
 const Post = require("../schemas/PostSchema");
 
+const getPost = async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id);
+    res.status(200).send(post);
+  } catch {
+    res.status(500).send(error);
+  }
+};
+
 const createPost = async (req, res) => {
   try {
     const newPost = new Post(req.body);
@@ -90,6 +99,7 @@ const uncommentPost = async (req, res) => {
 };
 
 module.exports = {
+  getPost,
   createPost,
   deletePost,
   updatePost,

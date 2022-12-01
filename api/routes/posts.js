@@ -1,5 +1,8 @@
 const router = require("express").Router();
 const postsControllers = require("../controllers/postsControllers");
+const { route } = require("./users");
+
+router.get("/:id", postsControllers.getPost);
 
 router.post("/", postsControllers.createPost);
 
