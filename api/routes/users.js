@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const usersControllers = require("../controllers/usersControllers");
-const verifyToken = require("../verifyToken")
+const verifyToken = require("../verifyToken");
 
 router.get("/:id", usersControllers.getUser);
 

@@ -15,6 +15,6 @@ router.put("/:id/comment", postsControllers.commentPost);
 
 router.put("/:id/uncomment", postsControllers.uncommentPost);
 
-router.get("/home/posts", postsControllers.homePosts);
+router.get("/posts/:id", postsControllers.homePosts);
 
 module.exports = router;

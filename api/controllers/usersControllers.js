@@ -37,9 +37,10 @@ const updateUser = async (req, res) => {
 };
 
 const deleteUser = async (req, res) => {
-  const { userId, admin } = req.body;
+  const { admin } = req.body;
+  const { id } = req.user;
 
-  if (req.params.id === userId || admin) {
+  if (req.params.id === id || admin) {
     try {
       await User.findByIdAndDelete(req.params.id);
       res.status(200).send("User has been deleted");
