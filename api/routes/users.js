@@ -1,11 +1,12 @@
 const router = require("express").Router();
 const usersControllers = require("../controllers/usersControllers");
+const verifyToken = require("../verifyToken")
 
 router.get("/:id", usersControllers.getUser);
 
-router.put("/:id", usersControllers.updateUser);
+router.put("/:id", verifyToken, usersControllers.updateUser);
 
-router.delete("/:id", usersControllers.deleteUser);
+router.delete("/:id", verifyToken, usersControllers.deleteUser);
 
 router.put("/:id/follow", usersControllers.followUser);
 

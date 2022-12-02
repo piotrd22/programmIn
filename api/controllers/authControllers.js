@@ -1,4 +1,5 @@
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 const User = require("../schemas/UserSchema");
 
 const signup = async (req, res) => {
@@ -26,21 +27,32 @@ const signup = async (req, res) => {
 
 const signin = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { email } = req.body;
 
     const log_user = await User.findOne({
       email: email,
     });
-    if (res.status(404) && !log_user) {
-      res.send("404 USER NOT FOUND");
+    if (!log_user) {
+      return res.status(404).send("404 USER NOT FOUND");
     }
 
-    const userPassw = await bcrypt.compare(password, log_user.password);
-    if (res.status(404) && !userPassw) {
-      res.send("404 WRONG PASSWORD");
+    const userPassw = await bcrypt.compare(
+      req.body.password,
+      log_user.password
+    );
+    if (!userPassw) {
+      return res.status(404).send("404 WRONG PASSWORD");
     }
 
-    res.status(200).send(log_user);
+    const accessToken = jwt.sign(
+      { id: log_user._id, admin: log_user.admin },
+      process.env.SECRET,
+      { expiresIn: "5d" }
+    );
+
+    const { password, ...rest } = log_user._doc;
+
+    res.status(200).send({ ...rest, accessToken });
   } catch (error) {
     res.status(500).send(error);
   }

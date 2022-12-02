@@ -10,9 +10,10 @@ const getUser = async (req, res) => {
 };
 
 const updateUser = async (req, res) => {
-  const { userId, password, admin } = req.body;
+  const { password, admin } = req.body;
+  const { id } = req.user;
 
-  if (req.params.id === userId || admin) {
+  if (req.params.id === id || admin) {
     if (password) {
       try {
         const salt = await bcrypt.genSalt(10);
