@@ -120,6 +120,15 @@ const homePosts = async (req, res) => {
   }
 };
 
+const userPosts = async (req, res) => {
+  try {
+    const posts = await Post.find({ userId: req.params.id });
+    res.status(200).send(posts);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
+
 module.exports = {
   getPost,
   createPost,
@@ -129,4 +138,5 @@ module.exports = {
   commentPost,
   uncommentPost,
   homePosts,
+  userPosts,
 };

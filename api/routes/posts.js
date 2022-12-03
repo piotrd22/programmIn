@@ -16,6 +16,8 @@ router.put("/:id/comment", verifyToken, postsControllers.commentPost);
 
 router.put("/:id/uncomment", verifyToken, postsControllers.uncommentPost);
 
-router.get("/posts/:id", verifyToken, postsControllers.homePosts);
+router.get("/posts", verifyToken, postsControllers.homePosts);
+
+router.get("/profile/:id", verifyToken, postsControllers.userPosts);
 
 module.exports = router;
