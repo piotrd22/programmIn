@@ -55,15 +55,15 @@ const deleteUser = async (req, res) => {
 };
 
 const followUser = async (req, res) => {
-  const { userId } = req.body;
+  const { id } = req.user;
 
-  if (req.params.id !== userId) {
+  if (req.params.id !== id) {
     try {
       const userToFollow = await User.findById(req.params.id);
-      const currUser = await User.findById(userId);
+      const currUser = await User.findById(id);
       if (currUser.following.filter((x) => x === req.params.id).length === 0) {
         await currUser.updateOne({ $push: { following: req.params.id } });
-        await userToFollow.updateOne({ $push: { followers: userId } });
+        await userToFollow.updateOne({ $push: { followers: id } });
         res.status(200).send("User has been followed");
       } else {
         res.status(403).send("User has been already followed");
@@ -77,16 +77,16 @@ const followUser = async (req, res) => {
 };
 
 const unfollowUser = async (req, res) => {
-  const { userId } = req.body;
+  const { id } = req.user;
 
-  if (req.params.id !== userId) {
+  if (req.params.id !== id) {
     try {
       const userToUnfollow = await User.findById(req.params.id);
-      const currUser = await User.findById(userId);
+      const currUser = await User.findById(id);
       if (currUser.following.filter((x) => x === req.params.id).length === 1) {
         await currUser.updateOne({ $pull: { following: req.params.id } });
         await userToUnfollow.updateOne({
-          $pull: { followers: userId },
+          $pull: { followers: id },
         });
         res.status(200).send("User has been unfollowed");
       } else {

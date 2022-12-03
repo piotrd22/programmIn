@@ -8,8 +8,8 @@ router.put("/:id", verifyToken, usersControllers.updateUser);
 
 router.delete("/:id", verifyToken, usersControllers.deleteUser);
 
-router.put("/:id/follow", usersControllers.followUser);
+router.put("/:id/follow", verifyToken, usersControllers.followUser);
 
-router.put("/:id/unfollow", usersControllers.unfollowUser);
+router.put("/:id/unfollow", verifyToken, usersControllers.unfollowUser);
 
 module.exports = router;

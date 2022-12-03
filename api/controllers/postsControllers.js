@@ -5,7 +5,7 @@ const getPost = async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
     res.status(200).send(post);
-  } catch {
+  } catch (error) {
     res.status(500).send(error);
   }
 };
@@ -61,7 +61,7 @@ const likePost = async (req, res) => {
     const post = await Post.findById(req.params.id);
 
     if (post.likes.filter((x) => x === id).length === 1) {
-      await post.updateOne({ $pull: { likes: userId } });
+      await post.updateOne({ $pull: { likes: id } });
       res.status(200).send("Post has been disliked");
     } else {
       await post.updateOne({ $push: { likes: id } });
@@ -109,8 +109,8 @@ const homePosts = async (req, res) => {
     const currUser = await User.findById(id);
     const currUserPosts = await Post.find({ userId: id });
     const followersPosts = await Promise.all(
-      currUser.following.map((id) => {
-        return Post.find({ userId: id });
+      currUser.following.map((f_id) => {
+        return Post.find({ userId: f_id });
       })
     );
 
