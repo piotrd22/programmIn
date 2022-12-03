@@ -10,12 +10,12 @@ router.delete("/:id", verifyToken, postsControllers.deletePost);
 
 router.put("/:id", verifyToken, postsControllers.updatePost);
 
-router.put("/:id/like", postsControllers.likePost);
+router.put("/:id/like", verifyToken, postsControllers.likePost);
 
-router.put("/:id/comment", postsControllers.commentPost);
+router.put("/:id/comment", verifyToken, postsControllers.commentPost);
 
-router.put("/:id/uncomment", postsControllers.uncommentPost);
+router.put("/:id/uncomment", verifyToken, postsControllers.uncommentPost);
 
-router.get("/posts/:id", postsControllers.homePosts);
+router.get("/posts/:id", verifyToken, postsControllers.homePosts);
 
 module.exports = router;

@@ -57,14 +57,14 @@ const updatePost = async (req, res) => {
 
 const likePost = async (req, res) => {
   try {
-    const { userId } = req.body;
+    const { id } = req.user;
     const post = await Post.findById(req.params.id);
 
-    if (post.likes.filter((x) => x === userId).length === 1) {
+    if (post.likes.filter((x) => x === id).length === 1) {
       await post.updateOne({ $pull: { likes: userId } });
       res.status(200).send("Post has been disliked");
     } else {
-      await post.updateOne({ $push: { likes: userId } });
+      await post.updateOne({ $push: { likes: id } });
       res.status(200).send("Post has been liked");
     }
   } catch (error) {
@@ -74,11 +74,12 @@ const likePost = async (req, res) => {
 
 const commentPost = async (req, res) => {
   try {
-    const { userId, desc } = req.body;
+    const { id } = req.user;
+    const { desc } = req.body;
     const post = await Post.findById(req.params.id);
 
     await post.updateOne({
-      $push: { comments: { postedBy: userId, desc: desc } },
+      $push: { comments: { postedBy: id, desc: desc } },
     });
     res.status(200).send("Post has been commented");
   } catch (error) {
@@ -88,11 +89,12 @@ const commentPost = async (req, res) => {
 
 const uncommentPost = async (req, res) => {
   try {
-    const { userId, desc } = req.body;
+    const { id } = req.user;
+    const { desc } = req.body;
     const post = await Post.findById(req.params.id);
 
     await post.updateOne({
-      $pull: { comments: { postedBy: userId, desc: desc } },
+      $pull: { comments: { postedBy: id, desc: desc } },
     });
     res.status(200).send("Post has been uncommented");
   } catch (error) {
@@ -102,10 +104,10 @@ const uncommentPost = async (req, res) => {
 
 const homePosts = async (req, res) => {
   try {
-    const { userId } = req.body;
+    const { id } = req.user;
 
-    const currUser = await User.findById(userId);
-    const currUserPosts = await Post.find({ userId: userId });
+    const currUser = await User.findById(id);
+    const currUserPosts = await Post.find({ userId: id });
     const followersPosts = await Promise.all(
       currUser.following.map((id) => {
         return Post.find({ userId: id });
