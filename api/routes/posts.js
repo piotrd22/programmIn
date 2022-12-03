@@ -16,7 +16,7 @@ router.put("/:id/comment", verifyToken, postsControllers.commentPost);
 
 router.put("/:id/uncomment", verifyToken, postsControllers.uncommentPost);
 
-router.get("/posts", verifyToken, postsControllers.homePosts);
+router.get("/timeline", verifyToken, postsControllers.homePosts);
 
 router.get("/profile/:id", verifyToken, postsControllers.userPosts);
 
