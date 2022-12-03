@@ -1,5 +1,6 @@
 const bcrypt = require("bcrypt");
 const User = require("../schemas/UserSchema");
+const Post = require("../schemas/PostSchema");
 
 const getUser = async (req, res) => {
   try {
@@ -43,6 +44,7 @@ const deleteUser = async (req, res) => {
   if (req.params.id === id || admin) {
     try {
       await User.findByIdAndDelete(req.params.id);
+      await Post.deleteMany({ userId: req.params.id });
       res.status(200).send("User has been deleted");
     } catch (error) {
       res.status(500).send(error);

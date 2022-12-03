@@ -12,7 +12,8 @@ const getPost = async (req, res) => {
 
 const createPost = async (req, res) => {
   try {
-    const newPost = new Post(req.body);
+    const { id } = req.user;
+    const newPost = new Post({ userId: id, ...req.body });
     await newPost.save();
     res.status(200).send(newPost);
   } catch (error) {
@@ -22,10 +23,10 @@ const createPost = async (req, res) => {
 
 const deletePost = async (req, res) => {
   try {
-    const { userId } = req.body;
+    const { id } = req.user;
 
     const currPost = await Post.findById(req.params.id);
-    if (currPost.userId === userId) {
+    if (currPost.userId === id) {
       await Post.findByIdAndDelete(req.params.id);
       res.status(200).send("Post has been deleted");
     } else {
@@ -38,10 +39,10 @@ const deletePost = async (req, res) => {
 
 const updatePost = async (req, res) => {
   try {
-    const { userId } = req.body;
+    const { id } = req.user;
 
     const currPost = await Post.findById(req.params.id);
-    if (currPost.userId === userId) {
+    if (currPost.userId === id) {
       await Post.findByIdAndUpdate(req.params.id, {
         $set: req.body,
       });
