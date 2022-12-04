@@ -4,7 +4,7 @@
   "description": "This project aims to create a mini social network using the MERN stack",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "nodemon api/server.js"
   },
   "repository": {
     "type": "git",
