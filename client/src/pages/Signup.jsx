@@ -66,7 +66,7 @@ function Signup() {
     onSubmit: async (user) => {
       try {
         await axios.post("http://localhost:8080/api/auth/signup", user);
-        reset()
+        reset();
       } catch (error) {
         console.log(error);
       }
