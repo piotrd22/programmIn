@@ -4,7 +4,7 @@ const User = require("../schemas/UserSchema");
 
 const signup = async (req, res) => {
   try {
-    const { name, surname, email, password, gender } = req.body;
+    const { name, surname, email, password, gender, nationality } = req.body;
 
     const salt = await bcrypt.genSalt(10);
     const hashedPassw = await bcrypt.hash(password, salt);
@@ -15,6 +15,7 @@ const signup = async (req, res) => {
       email: email,
       password: hashedPassw,
       gender: gender,
+      nationality: nationality
     });
 
     await newUser.save();

@@ -29,6 +29,11 @@ const UserSchema = new Schema(
       type: String,
       required: true,
     },
+    nationality: {
+      type: String,
+      default: "",
+      required: true,
+    },
     experience: {
       type: String,
       max: 100,
@@ -41,10 +46,6 @@ const UserSchema = new Schema(
     education: {
       type: String,
       max: 100,
-      default: "",
-    },
-    nationality: {
-      type: String,
       default: "",
     },
     city: {
