@@ -208,7 +208,7 @@ function Signup() {
           <button
             className="btn btn-block"
             type="submit"
-            disabled={!formik.isValid}
+            disabled={!formik.isValid || !formik.dirty}
           >
             Submit
           </button>

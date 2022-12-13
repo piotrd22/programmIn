@@ -114,9 +114,9 @@ li {
 }
 
 .btn {
-  font-family: inherit;
   padding: 10px 20px;
   border-radius: 5px;
+  background: $hovercol;
   color: $blackcol;
   font-size: 16px;
   font-weight: 500;
@@ -126,6 +126,10 @@ li {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.btn:disabled {
+  opacity: 0.5;
 }
 
 .btn:hover {
