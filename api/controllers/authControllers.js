@@ -6,6 +6,10 @@ const signup = async (req, res) => {
   try {
     const { name, surname, email, password, gender, nationality } = req.body;
 
+    if ((await User.find({ email: email })).length === 1) {
+      res.status(405).send("Email is already taken");
+    }
+
     const salt = await bcrypt.genSalt(10);
     const hashedPassw = await bcrypt.hash(password, salt);
 
@@ -22,7 +26,7 @@ const signup = async (req, res) => {
 
     res.status(200).send(newUser);
   } catch (error) {
-    res.status(500).send("Email already taken!");
+    res.status(500).send(error);
   }
 };
 
