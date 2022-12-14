@@ -1,9 +1,12 @@
 import { useFormik } from "formik";
 import { countryList } from "../assets/Countries";
 import { FaUserAlt } from "react-icons/fa";
+import { useState } from "react";
 import axios from "axios";
 
 function Signup() {
+  const [error, setError] = useState(false);
+
   const validate = (values) => {
     const errors = {};
 
@@ -50,6 +53,7 @@ function Signup() {
 
   const reset = () => {
     formik.resetForm();
+    setError(false);
   };
 
   const formik = useFormik({
@@ -64,12 +68,13 @@ function Signup() {
     },
     validate,
     onSubmit: async (user) => {
-      try {
-        await axios.post("http://localhost:8080/api/auth/signup", user);
-        reset();
-      } catch (error) {
-        console.log(error);
-      }
+      await axios
+        .post("http://localhost:8080/api/auth/signup", user)
+        .then(() => reset())
+        .catch((error) => {
+          if (error.response.status === 405) setError(true);
+          else alert(error.response);
+        });
     },
   });
 
@@ -205,6 +210,7 @@ function Signup() {
               id="checkbox"
             />
           </div>
+          {error && <div className="error-message">Email is already taken !</div>}
           <button
             className="btn btn-block"
             type="submit"
