@@ -1,6 +1,6 @@
 import React from "react";
 import { GoSignIn, GoSignOut } from "react-icons/go";
-import { FaUserAlt, FaHome } from "react-icons/fa";
+import { FaUserAlt, FaInfo } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 function Header() {
@@ -10,12 +10,6 @@ function Header() {
       <ul>
         <li>
           <Link to="/">
-            <FaHome />
-            Home
-          </Link>
-        </li>
-        <li>
-          <Link to="/signin">
             <GoSignIn />
             Sign In
           </Link>
@@ -24,6 +18,12 @@ function Header() {
           <Link to="/signup">
             <FaUserAlt />
             Sign Up
+          </Link>
+        </li>
+        <li>
+          <Link to="/about">
+            <FaInfo />
+            About
           </Link>
         </li>
       </ul>

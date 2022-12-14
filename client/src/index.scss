@@ -25,6 +25,13 @@ h1 {
   font-weight: 600;
   margin-bottom: 10px;
   color: $orangecol;
+
+  .error-sub {
+    font-weight: 200;
+    margin-bottom: 10px;
+    color: $orangecol;
+    font-size: x-small;
+  }
 }
 
 h4 {
@@ -93,6 +100,7 @@ li {
   padding: 10px;
   margin-bottom: 10px;
   font-family: inherit;
+
   label {
     margin-right: 10px;
   }

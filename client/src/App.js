@@ -1,6 +1,6 @@
 import "./index.scss";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
+import About from "./pages/About";
 import Signin from "./pages/Signin";
 import Signup from "./pages/Signup";
 import Header from "./components/Header";
@@ -12,8 +12,8 @@ function App() {
         <div className="container">
           <Header />
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/signin" element={<Signin />} />
+            <Route path="/" element={<Signin />} />
+            <Route path="/about" element={<About />} />
             <Route path="/signup" element={<Signup />} />
           </Routes>
         </div>

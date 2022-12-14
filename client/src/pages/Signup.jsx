@@ -45,7 +45,7 @@ function Signup() {
     } else if (
       !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)
     ) {
-      errors.email = "Invalid email address";
+      errors.email = "Incorrect email format";
     }
 
     return errors;
@@ -120,8 +120,8 @@ function Signup() {
               onChange={formik.handleChange}
               value={formik.values.email}
             />
-            {formik.errors.email === "Invalid email address" ? (
-              <div>{formik.errors.email}</div>
+            {formik.errors.email === "Incorrect email format" ? (
+              <div className="error-message">{formik.errors.email}</div>
             ) : null}
           </div>
           <div className="form-group">
@@ -134,7 +134,13 @@ function Signup() {
               value={formik.values.password}
             />
             {formik.errors.password === "Use Stronger Password" ? (
-              <div>{formik.errors.password}</div>
+              <div className="error-message">
+                {formik.errors.password}
+                <p className="error-sub">
+                  The password should contain at least 1 capital letter, 1
+                  special character, 1 number and be at least 6 characters long
+                </p>
+              </div>
             ) : null}
           </div>
           <div className="form-group">
@@ -210,7 +216,9 @@ function Signup() {
               id="checkbox"
             />
           </div>
-          {error && <div className="error-message">Email is already taken !</div>}
+          {error && (
+            <div className="error-message">Email is already taken !</div>
+          )}
           <button
             className="btn btn-block"
             type="submit"
