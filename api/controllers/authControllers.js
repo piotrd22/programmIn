@@ -7,7 +7,7 @@ const signup = async (req, res) => {
     const { name, surname, email, password, gender, nationality } = req.body;
 
     if ((await User.find({ email: email })).length === 1) {
-      res.status(405).send("Email is already taken");
+      return res.status(405).send("Email is already taken");
     }
 
     const salt = await bcrypt.genSalt(10);
