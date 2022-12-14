@@ -46,7 +46,7 @@ const signin = async (req, res) => {
       log_user.password
     );
     if (!userPassw) {
-      return res.status(404).send("404 WRONG PASSWORD");
+      return res.status(409).send("409 WRONG PASSWORD");
     }
 
     const accessToken = jwt.sign(
