@@ -1,6 +1,5 @@
 import React from "react";
-import { GoSignIn, GoSignOut } from "react-icons/go";
-import { FaUserAlt, FaInfo } from "react-icons/fa";
+import { FaUserAlt, FaInfo, FaSignInAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 function Header() {
@@ -10,7 +9,7 @@ function Header() {
       <ul>
         <li>
           <Link to="/">
-            <GoSignIn />
+            <FaSignInAlt />
             Sign In
           </Link>
         </li>

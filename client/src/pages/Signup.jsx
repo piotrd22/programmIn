@@ -37,7 +37,7 @@ function Signup() {
         values.password
       )
     ) {
-      errors.password = "Use Stronger Password";
+      errors.password = "Use stronger password";
     }
 
     if (!values.email) {
@@ -121,7 +121,10 @@ function Signup() {
               value={formik.values.email}
             />
             {formik.errors.email === "Incorrect email format" ? (
-              <div className="error-message">{formik.errors.email}</div>
+              <div className="error-message">
+                {formik.errors.email}
+                <p className="error-sub">Check entered email</p>
+              </div>
             ) : null}
           </div>
           <div className="form-group">
@@ -133,7 +136,7 @@ function Signup() {
               onChange={formik.handleChange}
               value={formik.values.password}
             />
-            {formik.errors.password === "Use Stronger Password" ? (
+            {formik.errors.password === "Use stronger password" ? (
               <div className="error-message">
                 {formik.errors.password}
                 <p className="error-sub">
