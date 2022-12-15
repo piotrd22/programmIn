@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { signup } from "../features/auth/authSlice";
 import { useNavigate } from "react-router-dom";
+import Loader from "../components/Loader";
 
 function Signup() {
   const [error, setError] = useState(false);
@@ -12,7 +13,7 @@ function Signup() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { isLoading, user } = useSelector((state) => state.auth);
+  const { isLoading } = useSelector((state) => state.auth);
 
   const validate = (values) => {
     const errors = {};
@@ -89,6 +90,8 @@ function Signup() {
         });
     },
   });
+
+  if (isLoading) return <Loader />;
 
   return (
     <div className="signup">

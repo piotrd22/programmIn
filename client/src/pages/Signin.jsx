@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { signin } from "../features/auth/authSlice";
 import { useNavigate } from "react-router-dom";
+import Loader from "../components/Loader";
 
 function Signin() {
   const [errorEmail, setErrorEmail] = useState(false);
@@ -12,7 +13,7 @@ function Signin() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { isLoading, user } = useSelector((state) => state.auth);
+  const { isLoading } = useSelector((state) => state.auth);
 
   const validate = (values) => {
     const errors = {};
@@ -70,6 +71,8 @@ function Signin() {
         });
     },
   });
+
+  if (isLoading) return <Loader />;
 
   return (
     <div className="Signin">
