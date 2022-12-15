@@ -1,7 +1,9 @@
+import PostForm from "../components/PostForm";
+
 function Feed() {
   return (
     <div>
-      <h1>Feed</h1>
+      <PostForm />
     </div>
   );
 }
