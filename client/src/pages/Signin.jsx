@@ -1,11 +1,16 @@
 import { useFormik } from "formik";
 import { FaSignInAlt } from "react-icons/fa";
 import { useState } from "react";
-import axios from "axios";
+import { useSelector, useDispatch } from "react-redux";
+import { signin } from "../features/auth/authSlice";
 
 function Signin() {
   const [errorEmail, setErrorEmail] = useState(false);
   const [errorPassw, setErrorPassw] = useState(false);
+
+  const dispatch = useDispatch();
+
+  const { isLoading } = useSelector((state) => state.auth);
 
   const validate = (values) => {
     const errors = {};
@@ -44,18 +49,19 @@ function Signin() {
     },
     validate,
     onSubmit: async (user) => {
-      await axios
-        .post("http://localhost:8080/api/auth/signin", user)
-        .then(() => reset())
-        .catch((error) => {
-          if (error.response.status === 404) {
-            setErrorEmail(true);
-            setErrorPassw(false);
-          } else if (error.response.status === 409) {
-            setErrorPassw(true);
-            setErrorEmail(false);
-          } else alert(error.response);
-        });
+      // await axios
+      //   .post("http://localhost:8080/api/auth/signin", user)
+      //   .then(() => reset())
+      //   .catch((error) => {
+      //     if (error.response.status === 404) {
+      //       setErrorEmail(true);
+      //       setErrorPassw(false);
+      //     } else if (error.response.status === 409) {
+      //       setErrorPassw(true);
+      //       setErrorEmail(false);
+      //     } else alert(error.response);
+      //   });
+      dispatch(signin(user));
     },
   });
 

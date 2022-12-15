@@ -2,10 +2,17 @@ import { useFormik } from "formik";
 import { countryList } from "../assets/Countries";
 import { FaUserAlt } from "react-icons/fa";
 import { useState } from "react";
-import axios from "axios";
+import { useSelector, useDispatch } from "react-redux";
+import { signup } from "../features/auth/authSlice";
+import { useNavigate } from "react-router-dom";
 
 function Signup() {
   const [error, setError] = useState(false);
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const { isLoading } = useSelector((state) => state.auth);
 
   const validate = (values) => {
     const errors = {};
@@ -67,13 +74,18 @@ function Signup() {
       checkbox: false,
     },
     validate,
-    onSubmit: async (user) => {
-      await axios
-        .post("http://localhost:8080/api/auth/signup", user)
-        .then(() => reset())
+    onSubmit: (user) => {
+      dispatch(signup(user))
+        .unwrap()
+        .then(() => {
+          reset();
+          navigate("/");
+        })
         .catch((error) => {
-          if (error.response.status === 405) setError(true);
-          else alert(error.response);
+          const arr = error.message.split(" ");
+          const res_status = arr[arr.length - 1];
+          if (res_status === "405") setError(true);
+          else alert(error.message);
         });
     },
   });
