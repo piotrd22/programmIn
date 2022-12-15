@@ -3,12 +3,14 @@ import { FaSignInAlt } from "react-icons/fa";
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { signin } from "../features/auth/authSlice";
+import { useNavigate } from "react-router-dom";
 
 function Signin() {
   const [errorEmail, setErrorEmail] = useState(false);
   const [errorPassw, setErrorPassw] = useState(false);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const { isLoading } = useSelector((state) => state.auth);
 
@@ -48,20 +50,24 @@ function Signin() {
       password: "",
     },
     validate,
-    onSubmit: async (user) => {
-      // await axios
-      //   .post("http://localhost:8080/api/auth/signin", user)
-      //   .then(() => reset())
-      //   .catch((error) => {
-      //     if (error.response.status === 404) {
-      //       setErrorEmail(true);
-      //       setErrorPassw(false);
-      //     } else if (error.response.status === 409) {
-      //       setErrorPassw(true);
-      //       setErrorEmail(false);
-      //     } else alert(error.response);
-      //   });
-      dispatch(signin(user));
+    onSubmit: (user) => {
+      dispatch(signin(user))
+        .unwrap()
+        .then(() => {
+          reset();
+          navigate("/info");
+        })
+        .catch((error) => {
+          const arr = error.split(" ");
+          const res_status = arr[arr.length - 1];
+          if (res_status === "404") {
+            setErrorEmail(true);
+            setErrorPassw(false);
+          } else if (res_status === "409") {
+            setErrorPassw(true);
+            setErrorEmail(false);
+          } else alert(error);
+        });
     },
   });
 

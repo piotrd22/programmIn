@@ -12,7 +12,7 @@ function Signup() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { isLoading } = useSelector((state) => state.auth);
+  const { isLoading, user } = useSelector((state) => state.auth);
 
   const validate = (values) => {
     const errors = {};
