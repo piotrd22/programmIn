@@ -12,7 +12,7 @@ function Signin() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { isLoading } = useSelector((state) => state.auth);
+  const { isLoading, user } = useSelector((state) => state.auth);
 
   const validate = (values) => {
     const errors = {};
@@ -55,7 +55,7 @@ function Signin() {
         .unwrap()
         .then(() => {
           reset();
-          navigate("/info");
+          navigate("/feed");
         })
         .catch((error) => {
           const arr = error.split(" ");
