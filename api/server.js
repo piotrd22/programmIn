@@ -5,6 +5,8 @@ const helmet = require("helmet");
 const cors = require("cors");
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
+const multer = require("multer");
+const path = require("path");
 
 const app = express();
 dotenv.config();
@@ -14,6 +16,25 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
 app.use(morgan("common"));
 app.use(helmet());
+app.use("/images", express.static(path.join(__dirname, "public/images")));
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "public/images");
+  },
+  filename: (req, file, cb) => {
+    cb(null, req.body.name);
+  },
+});
+
+const upload = multer({ storage: storage });
+app.post("/api/upload", upload.single("file"), (req, res) => {
+  try {
+    return res.status(200).json("File uploded successfully");
+  } catch (error) {
+    console.error(error);
+  }
+});
 
 //ROUTES
 const usersRouter = require("./routes/users");
