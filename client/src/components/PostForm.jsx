@@ -15,9 +15,9 @@ function PostForm() {
     return errors;
   };
 
-  const reset = () => {
-    formik.resetForm();
-  };
+  const reset = () => formik.resetForm();
+
+  const refreshPage = () => window.location.reload(false);
 
   const formik = useFormik({
     initialValues: {
@@ -30,6 +30,7 @@ function PostForm() {
         .unwrap()
         .then(() => {
           reset();
+          refreshPage();
         })
         .catch((error) => {
           alert(error);
