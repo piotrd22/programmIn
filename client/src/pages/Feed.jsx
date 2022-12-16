@@ -16,7 +16,7 @@ function Feed() {
       .then((res) => {
         setPosts(
           res.sort((x, y) => {
-            return new Date(y.updatedAt) - new Date(x.updatedAt);
+            return new Date(y.createdAt) - new Date(x.createdAt);
           })
         );
       })
