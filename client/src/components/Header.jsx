@@ -17,16 +17,25 @@ function Header() {
 
   return (
     <header className="header">
-      <h4>ProgrammIn</h4>
-      <ul>
-        {user ? (
-          <li>
-            <a onClick={logoutHandler}>
-              <FaSignOutAlt /> Logout
-            </a>
-          </li>
-        ) : (
-          <>
+      {user ? (
+        <>
+          <Link to="/feed">
+            <h4>ProgrammIn</h4>
+          </Link>
+          <ul>
+            <li>
+              <a onClick={logoutHandler}>
+                <FaSignOutAlt /> Logout
+              </a>
+            </li>
+          </ul>
+        </>
+      ) : (
+        <>
+          <Link to="/">
+            <h4>ProgrammIn</h4>
+          </Link>{" "}
+          <ul>
             <li>
               <Link to="/">
                 <FaSignInAlt />
@@ -45,9 +54,9 @@ function Header() {
                 About
               </Link>
             </li>
-          </>
-        )}
-      </ul>
+          </ul>
+        </>
+      )}
     </header>
   );
 }
