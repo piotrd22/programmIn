@@ -14,7 +14,11 @@ function Feed() {
     dispatch(homePosts())
       .unwrap()
       .then((res) => {
-        setPosts(res);
+        setPosts(
+          res.sort((p1, p2) => {
+            return new Date(p2.createdAt) - new Date(p1.createdAt);
+          })
+        );
       })
       .catch((error) => {
         alert(error);
