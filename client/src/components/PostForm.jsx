@@ -1,9 +1,10 @@
 import { useFormik } from "formik";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { createPost } from "../features/post/postSlice";
 
 function PostForm() {
   const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
 
   const validate = (values) => {
     const errors = {};
@@ -41,8 +42,8 @@ function PostForm() {
       <section className="form-post">
         <form onSubmit={formik.handleSubmit}>
           <div className="form-group-post">
-            <label htmlFor="desc">Start posting</label>
             <textarea
+              placeholder={"What's in your mind " + user.name + "?"}
               type="text"
               name="desc"
               id="desc"
@@ -52,12 +53,12 @@ function PostForm() {
             />
           </div>
           <div className="form-group-post">
-            <label htmlFor="image">Image</label>
             <input
               className="input-file"
               type="file"
               name="image"
               id="image"
+              accept=".png, .jpg, .jpeg"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.image}
