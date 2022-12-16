@@ -193,6 +193,7 @@ li {
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-bottom: 20px;
 }
 
 .btn-post:disabled {
@@ -233,5 +234,44 @@ li {
     border-color: #000 transparent #555 transparent;
     border-radius: 50%;
     animation: spin 1.2s linear infinite;
+  }
+}
+
+.post {
+  width: 40%;
+  margin: 0 auto;
+  padding: 10px;
+  border: 1px solid #e6e6e6;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  font-family: inherit;
+
+  .post-div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin: 5px;
+  }
+
+  .post-likes {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 5px;
+    color: $orangecol;
+    div {
+      margin-right: 30px;
+
+      .like-comment {
+        margin-right: 10px;
+      }
+    }
+  }
+
+  .post-desc {
+    padding: 15px;
+    border-top: 1px solid #e6e6e6;
+    border-bottom: 1px solid #e6e6e6;
   }
 }
