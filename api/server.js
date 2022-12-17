@@ -20,7 +20,7 @@ app.use("/images", express.static(path.join(__dirname, "public/images")));
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "public/images");
+    cb(null, "api/public/images");
   },
   filename: (req, file, cb) => {
     cb(null, req.body.name);
@@ -32,7 +32,7 @@ app.post("/api/upload", upload.single("file"), (req, res) => {
   try {
     return res.status(200).json("File uploded successfully");
   } catch (error) {
-    console.error(error);
+    res.status(500).send(error);
   }
 });
 

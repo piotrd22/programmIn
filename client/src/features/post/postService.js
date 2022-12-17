@@ -3,7 +3,7 @@ import axios from "axios";
 const createPost = async (postData, token) => {
   const config = {
     headers: {
-      token: "Bearer " + JSON.parse(localStorage.getItem("user")).accessToken,
+      token: "Bearer " + token,
     },
   };
 
@@ -15,7 +15,7 @@ const createPost = async (postData, token) => {
 const homePosts = async (token) => {
   const config = {
     headers: {
-      token: "Bearer " + JSON.parse(localStorage.getItem("user")).accessToken,
+      token: "Bearer " + token,
     },
   };
 
@@ -27,7 +27,7 @@ const homePosts = async (token) => {
 const likePost = async (postId, token) => {
   const config = {
     headers: {
-      token: "Bearer " + JSON.parse(localStorage.getItem("user")).accessToken,
+      token: "Bearer " + token,
     },
   };
 

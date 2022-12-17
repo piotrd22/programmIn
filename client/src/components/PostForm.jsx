@@ -1,10 +1,13 @@
 import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import { createPost } from "../features/post/postSlice";
+import { useState } from "react";
+import axios from "axios";
 
 function PostForm() {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
+  const [file, setFile] = useState(null);
 
   const validate = (values) => {
     const errors = {};
@@ -19,22 +22,49 @@ function PostForm() {
 
   const refreshPage = () => window.location.reload(false);
 
+  const onChange = (e) => {
+    setFile(e.target.files[0]);
+    formik.handleChange(e);
+  };
+
   const formik = useFormik({
     initialValues: {
       image: "",
       desc: "",
     },
     validate,
-    onSubmit: (post) => {
-      dispatch(createPost(post))
-        .unwrap()
-        .then(() => {
-          reset();
-          refreshPage();
-        })
-        .catch((error) => {
+    onSubmit: async (post) => {
+      if (file) {
+        const data = new FormData();
+        const postName = Date.now() + file.name;
+        data.append("name", postName);
+        data.append("file", file);
+        post.image = postName;
+        try {
+          await axios.post("api/upload/", data);
+        } catch (error) {
           alert(error);
-        });
+        }
+        dispatch(createPost(post))
+          .unwrap()
+          .then(() => {
+            reset();
+            refreshPage();
+          })
+          .catch((error) => {
+            alert(error);
+          });
+      } else {
+        dispatch(createPost(post))
+          .unwrap()
+          .then(() => {
+            reset();
+            refreshPage();
+          })
+          .catch((error) => {
+            alert(error);
+          });
+      }
     },
   });
 
@@ -55,12 +85,12 @@ function PostForm() {
           </div>
           <div className="form-group-post">
             <input
-              className="input-file"
+              className="input-post"
               type="file"
               name="image"
               id="image"
               accept=".png, .jpg, .jpeg"
-              onChange={formik.handleChange}
+              onChange={onChange}
               onBlur={formik.handleBlur}
               value={formik.values.image}
             />

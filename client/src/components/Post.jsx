@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { likePost } from "../features/post/postSlice";
 
 function Post({ post }) {
-  const [comments, setComments] = useState(post.comments.length)
+  const [comments, setComments] = useState(post.comments.length);
   const [like, setLike] = useState(post.likes.length);
   const [isLiked, setIsLiked] = useState(false);
   const { user } = useSelector((state) => state.auth);
@@ -27,7 +27,7 @@ function Post({ post }) {
         alert(error);
       });
   };
-  
+
   return (
     <div className="post">
       <div className="post-div">
@@ -36,7 +36,9 @@ function Post({ post }) {
       </div>
       <div className="post-desc">
         <span>{post?.desc}</span>
-        {post.image && <p>Zdjecie</p>}
+        {post.image && (
+          <img className="post-image" src={`images/${post.image}`} alt="Post" />
+        )}
       </div>
       <div className="post-likes">
         <div>
