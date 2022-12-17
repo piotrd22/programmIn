@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { likePost } from "../features/post/postSlice";
 
 function Post({ post }) {
+  const [comments, setComments] = useState(post.comments.length)
   const [like, setLike] = useState(post.likes.length);
   const [isLiked, setIsLiked] = useState(false);
   const { user } = useSelector((state) => state.auth);
@@ -44,7 +45,7 @@ function Post({ post }) {
         </div>
         <div>
           <FaComments className="like-comment" />
-          {post.comments.length}
+          {comments}
         </div>
       </div>
     </div>
