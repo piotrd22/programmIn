@@ -49,31 +49,37 @@ function Post({ post }) {
   };
 
   return (
-    <div className="post">
-      <div className="post-div">
-        <div>
-          <p>Created by</p>
-          <p className="date">{post.createdAt.slice(0, 10)}</p>
+    <div>
+      <div className="post">
+        <div className="post-div">
+          <div>
+            <p>Created by</p>
+            <p className="date">{post.createdAt.slice(0, 10)}</p>
+          </div>
+          <div>
+            <TiRefresh className="update" onClick={updateHandler} />
+            <TiDelete className="delete" onClick={deleteHandler} />
+          </div>
         </div>
-        <div>
-          <TiRefresh className="update" onClick={updateHandler} />
-          <TiDelete className="delete" onClick={deleteHandler} />
+        <div className="post-desc">
+          <span>{post?.desc}</span>
+          {post.image && (
+            <img
+              className="post-image"
+              src={`images/${post.image}`}
+              alt="Post"
+            />
+          )}
         </div>
-      </div>
-      <div className="post-desc">
-        <span>{post?.desc}</span>
-        {post.image && (
-          <img className="post-image" src={`images/${post.image}`} alt="Post" />
-        )}
-      </div>
-      <div className="post-likes">
-        <div>
-          <AiFillLike className="like-comment" onClick={likeHandler} />
-          {like}
-        </div>
-        <div>
-          <FaComments className="like-comment" />
-          {comments}
+        <div className="post-likes">
+          <div>
+            <AiFillLike className="like-comment" onClick={likeHandler} />
+            {like}
+          </div>
+          <div>
+            <FaComments className="like-comment" />
+            {comments}
+          </div>
         </div>
       </div>
       {isUpdating && <PostUpdateForm post={post} />}

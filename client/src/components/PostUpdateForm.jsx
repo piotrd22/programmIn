@@ -28,7 +28,7 @@ function PostForm({ post }) {
   const formik = useFormik({
     initialValues: {
       _id: post._id,
-      image: post.image ? post.image : "",
+      image: "",
       desc: post.desc,
     },
     validate,
@@ -92,11 +92,7 @@ function PostForm({ post }) {
               value={formik.values.image}
             />
           </div>
-          <button
-            className="btn-post"
-            type="submit"
-            disabled={!formik.isValid || !formik.dirty}
-          >
+          <button className="btn-post" type="submit">
             Submit
           </button>
         </form>
