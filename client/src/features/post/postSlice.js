@@ -73,6 +73,20 @@ export const updatePost = createAsyncThunk(
   }
 );
 
+export const getComments = createAsyncThunk(
+  "posts/getcomments",
+  async (postId, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.accessToken;
+      return await postService.getComments(postId, token);
+    } catch (error) {
+      const message =
+        error.response?.data?.message || error.message || error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 export const postSlice = createSlice({
   name: "post",
   initialState,

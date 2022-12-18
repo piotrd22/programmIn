@@ -3,15 +3,17 @@ import { FaComments } from "react-icons/fa";
 import { TiDelete, TiRefresh } from "react-icons/ti";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { likePost, deletePost } from "../features/post/postSlice";
+import { likePost, deletePost, getComments } from "../features/post/postSlice";
 import PostUpdateForm from "./PostUpdateForm";
 import CommentForm from "./CommentForm";
+import Comment from "./Comment";
 
 function Post({ post }) {
   const [like, setLike] = useState(post.likes.length);
   const [isLiked, setIsLiked] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
   const [isCommenting, setIsCommenting] = useState(false);
+  const [comments, setComments] = useState([]);
   const { user } = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
@@ -51,6 +53,14 @@ function Post({ post }) {
 
   const commentHandler = () => {
     setIsCommenting(!isCommenting);
+    dispatch(getComments(post._id))
+      .unwrap()
+      .then((res) => {
+        setComments(res);
+      })
+      .catch((error) => {
+        alert(error);
+      });
   };
 
   return (
@@ -86,7 +96,14 @@ function Post({ post }) {
             {post.comments.length}
           </div>
         </div>
-        {isCommenting && <CommentForm />}
+        {isCommenting && (
+          <div>
+            <CommentForm />
+            {comments.map((comment, index) => {
+              return <Comment key={index} comment={comment} />;
+            })}
+          </div>
+        )}
       </div>
       {isUpdating && <PostUpdateForm post={post} />}
     </div>

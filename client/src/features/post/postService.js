@@ -60,12 +60,25 @@ const updatePost = async (postData, token) => {
   return res.data;
 };
 
+const getComments = async (postId, token) => {
+  const config = {
+    headers: {
+      token: "Bearer " + token,
+    },
+  };
+
+  const res = await axios.get(`api/posts/${postId}/getcomments`, config);
+
+  return res.data;
+};
+
 const postService = {
   createPost,
   homePosts,
   likePost,
   deletePost,
   updatePost,
+  getComments,
 };
 
 export default postService;

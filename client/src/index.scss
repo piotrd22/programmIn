@@ -129,7 +129,7 @@ li {
 }
 
 .form-post {
-  width: 25%;
+  width: 40%;
   margin: 0 auto;
 }
 
@@ -296,6 +296,29 @@ li {
       .like-comment:hover {
         opacity: 0.4;
       }
+    }
+  }
+
+  .comment {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 auto;
+    padding: 10px;
+    border: 1px solid #e6e6e6;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    font-family: inherit;
+    font-size: small;
+
+    .delete {
+      color: $orangecol;
+      cursor: pointer;
+    }
+
+    .delete:hover {
+      opacity: 0.4;
     }
   }
 
