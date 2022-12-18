@@ -8,7 +8,7 @@ import PostUpdateForm from "./PostUpdateForm";
 import CommentForm from "./CommentForm";
 import Comment from "./Comment";
 
-function Post({ post }) {
+function Post({ post, del, update }) {
   const [like, setLike] = useState(post.likes.length);
   const [isLiked, setIsLiked] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
@@ -34,13 +34,11 @@ function Post({ post }) {
       });
   };
 
-  const refreshPage = () => window.location.reload(false);
-
   const deleteHandler = () => {
     dispatch(deletePost(post._id))
       .unwrap()
-      .then(() => {
-        refreshPage();
+      .then((res) => {
+        del(res);
       })
       .catch((error) => {
         alert(error);
@@ -105,7 +103,13 @@ function Post({ post }) {
           </div>
         )}
       </div>
-      {isUpdating && <PostUpdateForm post={post} />}
+      {isUpdating && (
+        <PostUpdateForm
+          post={post}
+          update={update}
+          updateHandler={updateHandler}
+        />
+      )}
     </div>
   );
 }

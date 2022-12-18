@@ -4,7 +4,7 @@ import { createPost } from "../features/post/postSlice";
 import { useState } from "react";
 import axios from "axios";
 
-function PostForm() {
+function PostForm({ add }) {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
   const [file, setFile] = useState(null);
@@ -20,7 +20,17 @@ function PostForm() {
 
   const reset = () => formik.resetForm();
 
-  const refreshPage = () => window.location.reload(false);
+  const makePost = (post) => {
+    dispatch(createPost(post))
+      .unwrap()
+      .then((res) => {
+        add(res);
+        reset();
+      })
+      .catch((error) => {
+        alert(error);
+      });
+  };
 
   const onChange = (e) => {
     setFile(e.target.files[0]);
@@ -45,25 +55,9 @@ function PostForm() {
         } catch (error) {
           alert(error);
         }
-        dispatch(createPost(post))
-          .unwrap()
-          .then(() => {
-            reset();
-            refreshPage();
-          })
-          .catch((error) => {
-            alert(error);
-          });
+        makePost(post);
       } else {
-        dispatch(createPost(post))
-          .unwrap()
-          .then(() => {
-            reset();
-            refreshPage();
-          })
-          .catch((error) => {
-            alert(error);
-          });
+        makePost(post);
       }
     },
   });

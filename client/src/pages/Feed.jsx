@@ -25,11 +25,28 @@ function Feed() {
       });
   }, [user._id, dispatch]);
 
+  const handleAdd = (post) => {
+    setPosts([post, ...posts]);
+  };
+
+  const handleDelete = (id) => {
+    setPosts(posts.filter((post) => post._id !== id));
+  };
+
+  const handleUpdate = (newPost) => {
+    setPosts(posts.map((post) => (newPost._id === post._id ? newPost : post)));
+  };
+
   return (
     <div>
-      <PostForm />
+      <PostForm add={handleAdd} />
       {posts.map((post) => (
-        <Post key={post._id} post={post} />
+        <Post
+          key={post._id}
+          post={post}
+          del={handleDelete}
+          update={handleUpdate}
+        />
       ))}
     </div>
   );

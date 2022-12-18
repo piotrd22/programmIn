@@ -4,7 +4,7 @@ import { updatePost } from "../features/post/postSlice";
 import { useState } from "react";
 import axios from "axios";
 
-function PostUpdateForm({ post }) {
+function PostUpdateForm({ post, update, updateHandler }) {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
   const [file, setFile] = useState(null);
@@ -18,7 +18,17 @@ function PostUpdateForm({ post }) {
     return errors;
   };
 
-  const refreshPage = () => window.location.reload(false);
+  const makePost = (post) => {
+    dispatch(updatePost(post))
+      .unwrap()
+      .then((res) => {
+        update(res);
+        updateHandler();
+      })
+      .catch((error) => {
+        alert(error);
+      });
+  };
 
   const onChange = (e) => {
     setFile(e.target.files[0]);
@@ -44,23 +54,9 @@ function PostUpdateForm({ post }) {
         } catch (error) {
           alert(error);
         }
-        dispatch(updatePost(post))
-          .unwrap()
-          .then(() => {
-            refreshPage();
-          })
-          .catch((error) => {
-            alert(error);
-          });
+        makePost(post);
       } else {
-        dispatch(updatePost(post))
-          .unwrap()
-          .then(() => {
-            refreshPage();
-          })
-          .catch((error) => {
-            alert(error);
-          });
+        makePost(post);
       }
     },
   });
