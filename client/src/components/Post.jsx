@@ -4,11 +4,13 @@ import { TiDelete, TiRefresh } from "react-icons/ti";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { likePost, deletePost } from "../features/post/postSlice";
+import PostUpdateForm from "./PostUpdateForm";
 
 function Post({ post }) {
   const [comments, setComments] = useState(post.comments.length);
   const [like, setLike] = useState(post.likes.length);
   const [isLiked, setIsLiked] = useState(false);
+  const [isUpdating, setIsUpdating] = useState(false);
   const { user } = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
@@ -42,6 +44,10 @@ function Post({ post }) {
       });
   };
 
+  const updateHandler = () => {
+    setIsUpdating(!isUpdating);
+  };
+
   return (
     <div className="post">
       <div className="post-div">
@@ -50,7 +56,7 @@ function Post({ post }) {
           <p className="date">{post.createdAt.slice(0, 10)}</p>
         </div>
         <div>
-          <TiRefresh className="update" />
+          <TiRefresh className="update" onClick={updateHandler} />
           <TiDelete className="delete" onClick={deleteHandler} />
         </div>
       </div>
@@ -70,6 +76,7 @@ function Post({ post }) {
           {comments}
         </div>
       </div>
+      {isUpdating && <PostUpdateForm post={post} />}
     </div>
   );
 }
