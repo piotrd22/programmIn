@@ -67,7 +67,19 @@ const getComments = async (postId, token) => {
     },
   };
 
-  const res = await axios.get(`api/posts/${postId}/getcomments`, config);
+  const res = await axios.get(`api/posts/${postId}/getcomments/`, config);
+
+  return res.data;
+};
+
+const commentPost = async (postData, token) => {
+  const config = {
+    headers: {
+      token: "Bearer " + token,
+    },
+  };
+
+  const res = await axios.put(`api/posts/${postData.postId}/comment/`, postData, config);
 
   return res.data;
 };
@@ -79,6 +91,7 @@ const postService = {
   deletePost,
   updatePost,
   getComments,
+  commentPost,
 };
 
 export default postService;

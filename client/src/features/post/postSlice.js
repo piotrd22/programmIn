@@ -87,6 +87,23 @@ export const getComments = createAsyncThunk(
   }
 );
 
+export const commentPost = createAsyncThunk(
+  "posts/comment",
+  async (postData, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.accessToken;
+      return await postService.commentPost(
+        postData,
+        token
+      );
+    } catch (error) {
+      const message =
+        error.response?.data?.message || error.message || error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 export const postSlice = createSlice({
   name: "post",
   initialState,

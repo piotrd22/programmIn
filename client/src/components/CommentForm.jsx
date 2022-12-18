@@ -2,7 +2,7 @@ import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import { commentPost } from "../features/post/postSlice";
 
-function Comment() {
+function CommentForm({ post }) {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
 
@@ -10,7 +10,7 @@ function Comment() {
     const errors = {};
 
     if (!values.desc) {
-      errors.name = "Required";
+      errors.desc = "Required";
     }
     return errors;
   };
@@ -20,10 +20,18 @@ function Comment() {
   const formik = useFormik({
     initialValues: {
       desc: "",
+      postId: post._id,
     },
     validate,
-    onSubmit: async (comment) => {
-      console.log(comment);
+    onSubmit: (comment) => {
+        dispatch(commentPost(comment))
+          .unwrap()
+          .then(() => {
+            refreshPage();
+          })
+          .catch((error) => {
+            alert(error);
+          });
     },
   });
 
@@ -51,4 +59,4 @@ function Comment() {
   );
 }
 
-export default Comment;
+export default CommentForm;

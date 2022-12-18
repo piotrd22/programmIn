@@ -68,7 +68,7 @@ function Post({ post }) {
       <div className="post">
         <div className="post-div">
           <div>
-            <p>Created by</p>
+            <p>{post.userId}</p>
             <p className="date">{post.createdAt.slice(0, 10)}</p>
           </div>
           <div>
@@ -98,7 +98,7 @@ function Post({ post }) {
         </div>
         {isCommenting && (
           <div>
-            <CommentForm />
+            <CommentForm post={post} />
             {comments.map((comment, index) => {
               return <Comment key={index} comment={comment} />;
             })}

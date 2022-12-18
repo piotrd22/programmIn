@@ -13,7 +13,7 @@ function PostUpdateForm({ post }) {
     const errors = {};
 
     if (!values.desc) {
-      errors.name = "Required";
+      errors.desc = "Required";
     }
     return errors;
   };

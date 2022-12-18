@@ -4,9 +4,9 @@ function Comment({ comment }) {
   return (
     <div>
       <div className="comment">
-        <p>Created By</p>
+        <p>{comment.postedBy}</p>
         <p>{comment.desc}</p>
-        <TiDelete className="delete"/>
+        <TiDelete className="delete" />
       </div>
     </div>
   );
