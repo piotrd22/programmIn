@@ -83,7 +83,9 @@ const commentPost = async (req, res) => {
     await post.updateOne({
       $push: { comments: { postedBy: id, desc: desc, id: uuid() } },
     });
-    res.status(200).send("Post has been commented");
+
+    const newPost = await Post.findById(req.params.id);
+    res.status(200).send(newPost.comments);
   } catch (error) {
     res.status(500).send(error);
   }
