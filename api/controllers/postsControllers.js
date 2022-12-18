@@ -29,7 +29,7 @@ const deletePost = async (req, res) => {
     const currPost = await Post.findById(req.params.id);
     if (currPost.userId === id) {
       await Post.findByIdAndDelete(req.params.id);
-      res.status(200).send("Post has been deleted");
+      res.status(200).send(req.params.id);
     } else {
       res.status(403).send("you can't delete not your post");
     }
@@ -47,7 +47,8 @@ const updatePost = async (req, res) => {
       await Post.findByIdAndUpdate(req.params.id, {
         $set: req.body,
       });
-      res.status(200).send("Post has been updated");
+      const newPost = await Post.findById(req.params.id);
+      res.status(200).send(newPost);
     } else {
       res.status(403).send("you can't update not your post");
     }
