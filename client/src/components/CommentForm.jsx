@@ -15,6 +15,8 @@ function CommentForm({ post, add }) {
     return errors;
   };
 
+  const reset = () => formik.resetForm();
+
   const formik = useFormik({
     initialValues: {
       desc: "",
@@ -26,6 +28,7 @@ function CommentForm({ post, add }) {
         .unwrap()
         .then((res) => {
           add(res);
+          reset();
         })
         .catch((error) => {
           alert(error);

@@ -2,7 +2,7 @@ import { TiDelete } from "react-icons/ti";
 import { useDispatch } from "react-redux";
 import { uncommentPost } from "../features/post/postSlice";
 
-function Comment({ comment, post }) {
+function Comment({ comment, post, del }) {
   const dispatch = useDispatch();
 
   const objectToDel = {
@@ -11,13 +11,11 @@ function Comment({ comment, post }) {
     id: comment.id,
   };
 
-  const refreshPage = () => window.location.reload(false);
-
   const handleDelete = () => {
     dispatch(uncommentPost(objectToDel))
       .unwrap()
-      .then(() => {
-        refreshPage();
+      .then((res) => {
+        del(res);
       })
       .catch((error) => {
         alert(error);

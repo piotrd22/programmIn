@@ -13,6 +13,7 @@ function Post({ post, del, update }) {
   const [isLiked, setIsLiked] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
   const [isCommenting, setIsCommenting] = useState(false);
+  const [commentLen, setCommentLen] = useState(post.comments.length);
   const [comments, setComments] = useState([]);
   const { user } = useSelector((state) => state.auth);
 
@@ -64,7 +65,13 @@ function Post({ post, del, update }) {
     setIsCommenting(!isCommenting);
   };
 
-  const handleAddComment = (newComments) => {
+  const handleAddComments = (newComments) => {
+    setCommentLen(commentLen + 1);
+    setComments([...newComments]);
+  };
+
+  const handleDelComments = (newComments) => {
+    setCommentLen(commentLen - 1);
     setComments([...newComments]);
   };
 
@@ -98,14 +105,21 @@ function Post({ post, del, update }) {
           </div>
           <div>
             <FaComments className="like-comment" onClick={commentHandler} />
-            {post.comments.length}
+            {commentLen}
           </div>
         </div>
         {isCommenting && (
           <div>
-            <CommentForm post={post} add={handleAddComment} />
+            <CommentForm post={post} add={handleAddComments} />
             {comments.map((comment, index) => {
-              return <Comment key={index} comment={comment} post={post} />;
+              return (
+                <Comment
+                  key={index}
+                  comment={comment}
+                  post={post}
+                  del={handleDelComments}
+                />
+              );
             })}
           </div>
         )}
