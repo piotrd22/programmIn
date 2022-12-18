@@ -1,8 +1,9 @@
 import { AiFillLike } from "react-icons/ai";
 import { FaComments } from "react-icons/fa";
+import { TiDelete } from "react-icons/ti";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { likePost } from "../features/post/postSlice";
+import { likePost, deletePost } from "../features/post/postSlice";
 
 function Post({ post }) {
   const [comments, setComments] = useState(post.comments.length);
@@ -28,11 +29,27 @@ function Post({ post }) {
       });
   };
 
+  const refreshPage = () => window.location.reload(false);
+
+  const deleteHandler = () => {
+    dispatch(deletePost(post._id))
+      .unwrap()
+      .then(() => {
+        refreshPage();
+      })
+      .catch((error) => {
+        alert(error);
+      });
+  };
+
   return (
     <div className="post">
       <div className="post-div">
-        <span>Created by</span>
-        <span className="date">{post.createdAt.slice(0, 10)}</span>
+        <div>
+          <p>Created by</p>
+          <p className="date">{post.createdAt.slice(0, 10)}</p>
+        </div>
+        <TiDelete className="delete" onClick={deleteHandler} />
       </div>
       <div className="post-desc">
         <span>{post?.desc}</span>
