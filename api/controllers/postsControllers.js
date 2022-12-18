@@ -100,7 +100,9 @@ const uncommentPost = async (req, res) => {
     await post.updateOne({
       $pull: { comments: { postedBy: id, desc: desc, id: req.body.id } },
     });
-    res.status(200).send("Post has been uncommented");
+
+    const newPost = await Post.findById(req.params.id);
+    res.status(200).send(newPost.comments);
   } catch (error) {
     res.status(500).send(error);
   }
