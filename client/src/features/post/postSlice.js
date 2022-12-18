@@ -92,10 +92,21 @@ export const commentPost = createAsyncThunk(
   async (postData, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.accessToken;
-      return await postService.commentPost(
-        postData,
-        token
-      );
+      return await postService.commentPost(postData, token);
+    } catch (error) {
+      const message =
+        error.response?.data?.message || error.message || error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+export const uncommentPost = createAsyncThunk(
+  "posts/uncomment",
+  async (postData, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.accessToken;
+      return await postService.uncommentPost(postData, token);
     } catch (error) {
       const message =
         error.response?.data?.message || error.message || error.toString();

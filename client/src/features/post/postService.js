@@ -79,7 +79,27 @@ const commentPost = async (postData, token) => {
     },
   };
 
-  const res = await axios.put(`api/posts/${postData.postId}/comment/`, postData, config);
+  const res = await axios.put(
+    `api/posts/${postData.postId}/comment/`,
+    postData,
+    config
+  );
+
+  return res.data;
+};
+
+const uncommentPost = async (postData, token) => {
+  const config = {
+    headers: {
+      token: "Bearer " + token,
+    },
+  };
+
+  const res = await axios.put(
+    `api/posts/${postData.postId}/uncomment/`,
+    postData,
+    config
+  );
 
   return res.data;
 };
@@ -92,6 +112,7 @@ const postService = {
   updatePost,
   getComments,
   commentPost,
+  uncommentPost,
 };
 
 export default postService;

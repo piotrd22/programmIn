@@ -24,14 +24,14 @@ function CommentForm({ post }) {
     },
     validate,
     onSubmit: (comment) => {
-        dispatch(commentPost(comment))
-          .unwrap()
-          .then(() => {
-            refreshPage();
-          })
-          .catch((error) => {
-            alert(error);
-          });
+      dispatch(commentPost(comment))
+        .unwrap()
+        .then(() => {
+          refreshPage();
+        })
+        .catch((error) => {
+          alert(error);
+        });
     },
   });
 

@@ -100,7 +100,7 @@ function Post({ post }) {
           <div>
             <CommentForm post={post} />
             {comments.map((comment, index) => {
-              return <Comment key={index} comment={comment} />;
+              return <Comment key={index} comment={comment} post={post} />;
             })}
           </div>
         )}
