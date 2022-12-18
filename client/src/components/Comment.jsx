@@ -8,6 +8,7 @@ function Comment({ comment, post }) {
   const objectToDel = {
     postId: post._id,
     desc: comment.desc,
+    id: comment.id,
   };
 
   const refreshPage = () => window.location.reload(false);
