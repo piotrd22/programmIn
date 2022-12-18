@@ -22,6 +22,17 @@ function Post({ post, del, update }) {
     setIsLiked(post.likes.includes(user._id));
   }, [user._id, post.likes]);
 
+  useEffect(() => {
+    dispatch(getComments(post._id))
+      .unwrap()
+      .then((res) => {
+        setComments(res);
+      })
+      .catch((error) => {
+        alert(error);
+      });
+  }, [dispatch, post._id]);
+
   const likeHandler = () => {
     dispatch(likePost(post._id))
       .unwrap()
@@ -51,14 +62,10 @@ function Post({ post, del, update }) {
 
   const commentHandler = () => {
     setIsCommenting(!isCommenting);
-    dispatch(getComments(post._id))
-      .unwrap()
-      .then((res) => {
-        setComments(res);
-      })
-      .catch((error) => {
-        alert(error);
-      });
+  };
+
+  const handleAddComment = (newComments) => {
+    setComments([...newComments]);
   };
 
   return (
@@ -96,7 +103,7 @@ function Post({ post, del, update }) {
         </div>
         {isCommenting && (
           <div>
-            <CommentForm post={post} />
+            <CommentForm post={post} add={handleAddComment} />
             {comments.map((comment, index) => {
               return <Comment key={index} comment={comment} post={post} />;
             })}

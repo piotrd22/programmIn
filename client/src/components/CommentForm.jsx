@@ -2,7 +2,7 @@ import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import { commentPost } from "../features/post/postSlice";
 
-function CommentForm({ post }) {
+function CommentForm({ post, add }) {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
 
@@ -15,8 +15,6 @@ function CommentForm({ post }) {
     return errors;
   };
 
-  const refreshPage = () => window.location.reload(false);
-
   const formik = useFormik({
     initialValues: {
       desc: "",
@@ -26,8 +24,8 @@ function CommentForm({ post }) {
     onSubmit: (comment) => {
       dispatch(commentPost(comment))
         .unwrap()
-        .then(() => {
-          refreshPage();
+        .then((res) => {
+          add(res);
         })
         .catch((error) => {
           alert(error);
