@@ -1,5 +1,6 @@
 const Post = require("../schemas/PostSchema");
 const User = require("../schemas/UserSchema");
+const { uuid } = require("uuidv4");
 
 const getPost = async (req, res) => {
   try {
@@ -79,7 +80,7 @@ const commentPost = async (req, res) => {
     const post = await Post.findById(req.params.id);
 
     await post.updateOne({
-      $push: { comments: { postedBy: id, desc: desc } },
+      $push: { comments: { postedBy: id, desc: desc, id: uuid() } },
     });
     res.status(200).send("Post has been commented");
   } catch (error) {
@@ -94,7 +95,7 @@ const uncommentPost = async (req, res) => {
     const post = await Post.findById(req.params.id);
 
     await post.updateOne({
-      $pull: { comments: { postedBy: id, desc: desc } },
+      $pull: { comments: { postedBy: id, desc: desc, id: req.body.id } },
     });
     res.status(200).send("Post has been uncommented");
   } catch (error) {
