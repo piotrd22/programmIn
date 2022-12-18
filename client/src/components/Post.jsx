@@ -5,12 +5,13 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { likePost, deletePost } from "../features/post/postSlice";
 import PostUpdateForm from "./PostUpdateForm";
+import CommentForm from "./CommentForm";
 
 function Post({ post }) {
-  const [comments, setComments] = useState(post.comments.length);
   const [like, setLike] = useState(post.likes.length);
   const [isLiked, setIsLiked] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
+  const [isCommenting, setIsCommenting] = useState(false);
   const { user } = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
@@ -48,6 +49,10 @@ function Post({ post }) {
     setIsUpdating(!isUpdating);
   };
 
+  const commentHandler = () => {
+    setIsCommenting(!isCommenting);
+  };
+
   return (
     <div>
       <div className="post">
@@ -77,10 +82,11 @@ function Post({ post }) {
             {like}
           </div>
           <div>
-            <FaComments className="like-comment" />
-            {comments}
+            <FaComments className="like-comment" onClick={commentHandler} />
+            {post.comments.length}
           </div>
         </div>
+        {isCommenting && <CommentForm />}
       </div>
       {isUpdating && <PostUpdateForm post={post} />}
     </div>

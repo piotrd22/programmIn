@@ -4,7 +4,7 @@ import { updatePost } from "../features/post/postSlice";
 import { useState } from "react";
 import axios from "axios";
 
-function PostForm({ post }) {
+function PostUpdateForm({ post }) {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
   const [file, setFile] = useState(null);
@@ -101,4 +101,4 @@ function PostForm({ post }) {
   );
 }
 
-export default PostForm;
+export default PostUpdateForm;
