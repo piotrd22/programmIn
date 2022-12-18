@@ -102,6 +102,9 @@ function PostForm() {
           >
             Submit
           </button>
+          <button className="btn-post" type="button" onClick={reset}>
+            Reset
+          </button>
         </form>
       </section>
     </div>

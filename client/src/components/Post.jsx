@@ -1,6 +1,6 @@
 import { AiFillLike } from "react-icons/ai";
 import { FaComments } from "react-icons/fa";
-import { TiDelete } from "react-icons/ti";
+import { TiDelete, TiRefresh } from "react-icons/ti";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { likePost, deletePost } from "../features/post/postSlice";
@@ -49,7 +49,10 @@ function Post({ post }) {
           <p>Created by</p>
           <p className="date">{post.createdAt.slice(0, 10)}</p>
         </div>
-        <TiDelete className="delete" onClick={deleteHandler} />
+        <div>
+          <TiRefresh className="update" />
+          <TiDelete className="delete" onClick={deleteHandler} />
+        </div>
       </div>
       <div className="post-desc">
         <span>{post?.desc}</span>

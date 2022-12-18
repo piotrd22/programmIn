@@ -48,11 +48,24 @@ const deletePost = async (postId, token) => {
   return res.data;
 };
 
+const updatePost = async (postData, token) => {
+  const config = {
+    headers: {
+      token: "Bearer " + token,
+    },
+  };
+
+  const res = await axios.put(`api/posts/${postData._id}/`, postData, config);
+
+  return res.data;
+};
+
 const postService = {
   createPost,
   homePosts,
   likePost,
   deletePost,
+  updatePost,
 };
 
 export default postService;

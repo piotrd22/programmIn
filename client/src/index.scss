@@ -247,6 +247,7 @@ li {
   font-family: inherit;
 
   .post-div {
+    font-size: smaller;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -258,11 +259,22 @@ li {
     }
 
     .delete {
-      margin-right: 10px;
+      color: $orangecol;
+      margin-left: 20px;
       cursor: pointer;
     }
 
     .delete:hover {
+      opacity: 0.4;
+    }
+
+    .update {
+      color: $orangecol;
+      cursor: pointer;
+      font-size: large;
+    }
+
+    .update:hover {
       opacity: 0.4;
     }
   }
