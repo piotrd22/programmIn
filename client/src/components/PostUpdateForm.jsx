@@ -1,12 +1,11 @@
 import { useFormik } from "formik";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { updatePost } from "../features/post/postSlice";
 import { useState } from "react";
 import axios from "axios";
 
 function PostUpdateForm({ post, update, updateHandler }) {
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.auth);
   const [file, setFile] = useState(null);
 
   const validate = (values) => {
@@ -67,7 +66,6 @@ function PostUpdateForm({ post, update, updateHandler }) {
         <form onSubmit={formik.handleSubmit}>
           <div className="form-group-post">
             <textarea
-              placeholder={"What's in your mind " + user.name + "?"}
               type="text"
               name="desc"
               id="desc"

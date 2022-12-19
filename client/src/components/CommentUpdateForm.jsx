@@ -1,10 +1,9 @@
 import { useFormik } from "formik";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { updateComment } from "../features/post/postSlice";
 
 function CommentUpdateForm({ post, update, comment, updateHandler }) {
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.auth);
 
   const validate = (values) => {
     const errors = {};
@@ -41,7 +40,6 @@ function CommentUpdateForm({ post, update, comment, updateHandler }) {
         <form onSubmit={formik.handleSubmit}>
           <div className="form-group-post">
             <input
-              placeholder={"What's in your mind " + user.name + "?"}
               type="text"
               name="desc"
               id="desc"

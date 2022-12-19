@@ -68,7 +68,7 @@ function PostForm({ add }) {
         <form onSubmit={formik.handleSubmit}>
           <div className="form-group-post">
             <textarea
-              placeholder={"What's in your mind " + user.name + "?"}
+              placeholder={"What's on your mind " + user.name + "?"}
               type="text"
               name="desc"
               id="desc"

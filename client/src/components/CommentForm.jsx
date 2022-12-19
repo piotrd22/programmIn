@@ -42,7 +42,7 @@ function CommentForm({ post, add }) {
         <form onSubmit={formik.handleSubmit}>
           <div className="form-group-post">
             <input
-              placeholder={"What's in your mind " + user.name + "?"}
+              placeholder={"What's on your mind " + user.name + "?"}
               type="text"
               name="desc"
               id="desc"
