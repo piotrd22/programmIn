@@ -1,6 +1,7 @@
 const Post = require("../schemas/PostSchema");
 const User = require("../schemas/UserSchema");
 const { v4: uuidv4 } = require("uuid");
+const fs = require("fs");
 
 const getPost = async (req, res) => {
   try {
@@ -28,6 +29,15 @@ const deletePost = async (req, res) => {
 
     const currPost = await Post.findById(req.params.id);
     if (currPost.userId === id) {
+      if (currPost.image) {
+        try {
+          fs.unlinkSync(`api/public/images/${currPost.image}`);
+          console.log("File removed");
+        } catch (error) {
+          console.error(error);
+        }
+      }
+
       await Post.findByIdAndDelete(req.params.id);
       res.status(200).send(req.params.id);
     } else {
@@ -44,6 +54,15 @@ const updatePost = async (req, res) => {
 
     const currPost = await Post.findById(req.params.id);
     if (currPost.userId === id) {
+      if (currPost.image) {
+        try {
+          fs.unlinkSync(`api/public/images/${currPost.image}`);
+          console.log("File removed");
+        } catch (error) {
+          console.error(error);
+        }
+      }
+
       await Post.findByIdAndUpdate(req.params.id, {
         $set: req.body,
       });
