@@ -7,7 +7,10 @@ const getUser = async (userId, token) => {
     },
   };
 
-  const res = await axios.get(`api/users/${userId}`, config);
+  const res = await axios.get(
+    `http://localhost:8080/api/users/${userId}`,
+    config
+  );
 
   return res.data;
 };

@@ -41,7 +41,7 @@ function Header() {
               </Link>
             </li>
             <li>
-              <Link to={`/${user._id}`}>
+              <Link to={`/profile/${user._id}`}>
                 <FaUserAlt /> User Page
               </Link>
             </li>

@@ -40,7 +40,7 @@ function App() {
               element={user ? <Feed /> : <Navigate to="/" />}
             />
             <Route
-              path="/:id"
+              path="/profile/:id"
               element={user ? <Profile /> : <Navigate to="/" />}
             />
             <Route
