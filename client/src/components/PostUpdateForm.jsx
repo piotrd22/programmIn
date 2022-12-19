@@ -17,11 +17,17 @@ function PostUpdateForm({ post, update, updateHandler }) {
     return errors;
   };
 
+  const refreshPage = () => window.location.reload();
+
   const makePost = (post) => {
     dispatch(updatePost(post))
       .unwrap()
       .then((res) => {
-        update(res);
+        if (res.image) {
+          refreshPage();
+        } else {
+          update(res);
+        }
         updateHandler();
       })
       .catch((error) => {

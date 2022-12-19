@@ -20,11 +20,17 @@ function PostForm({ add }) {
 
   const reset = () => formik.resetForm();
 
+  const refreshPage = () => window.location.reload();
+
   const makePost = (post) => {
     dispatch(createPost(post))
       .unwrap()
       .then((res) => {
-        add(res);
+        if (res.image) {
+          refreshPage();
+        } else {
+          add(res);
+        }
         reset();
       })
       .catch((error) => {
