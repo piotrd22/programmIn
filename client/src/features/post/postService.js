@@ -104,6 +104,22 @@ const uncommentPost = async (postData, token) => {
   return res.data;
 };
 
+const updateComment = async (postData, token) => {
+  const config = {
+    headers: {
+      token: "Bearer " + token,
+    },
+  };
+
+  const res = await axios.put(
+    `api/posts/${postData.postId}/updatecomment/`,
+    postData,
+    config
+  );
+
+  return res.data;
+};
+
 const postService = {
   createPost,
   homePosts,
@@ -113,6 +129,7 @@ const postService = {
   getComments,
   commentPost,
   uncommentPost,
+  updateComment,
 };
 
 export default postService;

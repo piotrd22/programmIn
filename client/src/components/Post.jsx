@@ -75,6 +75,10 @@ function Post({ post, del, update }) {
     setComments([...newComments]);
   };
 
+  const handleUpdComments = (newComments) => {
+    setComments([...newComments]);
+  };
+
   return (
     <div>
       <div className="post">
@@ -118,6 +122,7 @@ function Post({ post, del, update }) {
                   comment={comment}
                   post={post}
                   del={handleDelComments}
+                  update={handleUpdComments}
                 />
               );
             })}

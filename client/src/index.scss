@@ -315,9 +315,19 @@ li {
     .delete {
       color: $orangecol;
       cursor: pointer;
+      margin-left: 10px;
     }
 
     .delete:hover {
+      opacity: 0.4;
+    }
+
+    .update {
+      color: $orangecol;
+      cursor: pointer;
+    }
+
+    .update:hover {
       opacity: 0.4;
     }
   }
