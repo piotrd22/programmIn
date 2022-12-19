@@ -18,6 +18,8 @@ router.put("/:id/comment", verifyToken, postsControllers.commentPost);
 
 router.put("/:id/uncomment", verifyToken, postsControllers.uncommentPost);
 
+router.put("/:id/updatecomment", verifyToken, postsControllers.updateComment);
+
 router.get("/:id/getcomments", verifyToken, postsControllers.getComments);
 
 router.get("/profile/:id", verifyToken, postsControllers.userPosts);

@@ -1,6 +1,6 @@
 const Post = require("../schemas/PostSchema");
 const User = require("../schemas/UserSchema");
-const { uuid } = require("uuidv4");
+const { v4: uuidv4 } = require("uuid");
 
 const getPost = async (req, res) => {
   try {
@@ -81,7 +81,7 @@ const commentPost = async (req, res) => {
     const post = await Post.findById(req.params.id);
 
     await post.updateOne({
-      $push: { comments: { postedBy: id, desc: desc, id: uuid() } },
+      $push: { comments: { postedBy: id, desc: desc, id: uuidv4() } },
     });
 
     const newPost = await Post.findById(req.params.id);
@@ -97,12 +97,56 @@ const uncommentPost = async (req, res) => {
     const { desc } = req.body;
     const post = await Post.findById(req.params.id);
 
-    await post.updateOne({
-      $pull: { comments: { postedBy: id, desc: desc, id: req.body.id } },
-    });
+    if (
+      post.userId === id ||
+      post.comments.filter(
+        (comment) =>
+          comment.postedBy === id &&
+          comment.desc === desc &&
+          comment.id === req.body.id
+      ).length === 1
+    ) {
+      await Post.updateOne({
+        $pull: { comments: { id: req.body.id } },
+      });
 
-    const newPost = await Post.findById(req.params.id);
-    res.status(200).send(newPost.comments);
+      const newPost = await Post.findById(req.params.id);
+      res.status(200).send(newPost.comments);
+    } else {
+      res.status(403).send("you can't delete not your comment");
+    }
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
+
+const updateComment = async (req, res) => {
+  try {
+    const { id } = req.user;
+    const { desc } = req.body;
+    const post = await Post.findById(req.params.id);
+
+    if (
+      post.userId === id ||
+      post.comments.filter(
+        (comment) =>
+          comment.postedBy === id &&
+          comment.desc === desc &&
+          comment.id === req.body.id
+      ).length === 1
+    ) {
+      await Post.updateOne(
+        { _id: req.params.id, "comments.id": req.body.id },
+        {
+          $set: { "comments.$.desc": desc },
+        }
+      );
+
+      const newPost = await Post.findById(req.params.id);
+      res.status(200).send(newPost.comments);
+    } else {
+      res.status(403).send("you can't update not your comment");
+    }
   } catch (error) {
     res.status(500).send(error);
   }
@@ -155,4 +199,5 @@ module.exports = {
   homePosts,
   userPosts,
   getComments,
+  updateComment,
 };
