@@ -106,7 +106,7 @@ const uncommentPost = async (req, res) => {
           comment.id === req.body.id
       ).length === 1
     ) {
-      await Post.updateOne({
+      await post.updateOne({
         $pull: { comments: { id: req.body.id } },
       });
 
