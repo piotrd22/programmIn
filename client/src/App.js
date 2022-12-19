@@ -12,6 +12,7 @@ import Signup from "./pages/Signup";
 import Header from "./components/Header";
 import Feed from "./pages/Feed";
 import NotFound from "./pages/NotFound";
+import Profile from "./pages/Profile";
 
 function App() {
   const { user } = useSelector((state) => state.auth);
@@ -37,6 +38,10 @@ function App() {
             <Route
               path="/feed"
               element={user ? <Feed /> : <Navigate to="/" />}
+            />
+            <Route
+              path="/:id"
+              element={user ? <Profile /> : <Navigate to="/" />}
             />
             <Route
               path="*"

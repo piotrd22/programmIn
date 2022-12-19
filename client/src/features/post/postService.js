@@ -120,6 +120,18 @@ const updateComment = async (postData, token) => {
   return res.data;
 };
 
+const userPosts = async (userId, token) => {
+  const config = {
+    headers: {
+      token: "Bearer " + token,
+    },
+  };
+
+  const res = await axios.get(`api/posts/profile/${userId}/`, config);
+
+  return res.data;
+};
+
 const postService = {
   createPost,
   homePosts,
@@ -130,6 +142,7 @@ const postService = {
   commentPost,
   uncommentPost,
   updateComment,
+  userPosts,
 };
 
 export default postService;
