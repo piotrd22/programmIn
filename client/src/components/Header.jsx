@@ -1,5 +1,12 @@
 import React from "react";
-import { FaUserAlt, FaInfo, FaSignInAlt, FaSignOutAlt } from "react-icons/fa";
+import {
+  FaUserAlt,
+  FaInfo,
+  FaSignInAlt,
+  FaSignOutAlt,
+  FaHome,
+} from "react-icons/fa";
+import { AiFillWechat } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../features/auth/authSlice";
@@ -24,9 +31,24 @@ function Header() {
           </Link>
           <ul>
             <li>
-              <a href="/" onClick={logoutHandler}>
+              <Link to="/feed">
+                <FaHome /> Home
+              </Link>
+            </li>
+            <li>
+              <Link>
+                <AiFillWechat /> Chat
+              </Link>
+            </li>
+            <li>
+              <Link>
+                <FaUserAlt /> User Page
+              </Link>
+            </li>
+            <li>
+              <Link to="/" onClick={logoutHandler}>
                 <FaSignOutAlt /> Logout
-              </a>
+              </Link>
             </li>
           </ul>
         </>
