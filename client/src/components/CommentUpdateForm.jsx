@@ -27,7 +27,7 @@ function CommentUpdateForm({ post, update, comment, updateHandler }) {
         .unwrap()
         .then((res) => {
           update(res);
-          updateHandler()
+          updateHandler();
         })
         .catch((error) => {
           alert(error);
