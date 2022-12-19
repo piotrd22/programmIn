@@ -1,5 +1,11 @@
 import "./index.scss";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+import { useSelector } from "react-redux";
 import About from "./pages/About";
 import Signin from "./pages/Signin";
 import Signup from "./pages/Signup";
@@ -8,16 +14,30 @@ import Feed from "./pages/Feed";
 import NotFound from "./pages/NotFound";
 
 function App() {
+  const { user } = useSelector((state) => state.auth);
+
   return (
     <div>
       <Router>
         <div className="container">
           <Header />
           <Routes>
-            <Route path="/" element={<Signin />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/feed" element={<Feed />} />
+            <Route
+              path="/"
+              element={user ? <Navigate to="/feed" /> : <Signin />}
+            />
+            <Route
+              path="/about"
+              element={user ? <Navigate to="/feed" /> : <About />}
+            />
+            <Route
+              path="/signup"
+              element={user ? <Navigate to="/feed" /> : <Signup />}
+            />
+            <Route
+              path="/feed"
+              element={user ? <Feed /> : <Navigate to="/" />}
+            />
             <Route
               path="*"
               element={<NotFound data={window.location.href} />}
