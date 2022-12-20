@@ -55,7 +55,7 @@ function PostUpdateForm({ post, update, updateHandler }) {
         data.append("file", file);
         post.image = postName;
         try {
-          await axios.post("api/upload/", data);
+          await axios.post("http://localhost:8080/api/upload/", data);
         } catch (error) {
           alert(error);
         }

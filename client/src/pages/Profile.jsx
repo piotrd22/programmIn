@@ -2,15 +2,36 @@ import { useParams } from "react-router";
 import { userPosts } from "../features/post/postSlice";
 import { getUser } from "../features/user/userSlice";
 import { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { FaUserAlt } from "react-icons/fa";
+import { Link } from "react-router-dom";
 import Post from "../components/Post";
 
 function Profile() {
+  const initialState = {
+    name: "",
+    surname: "",
+    email: "",
+    gender: "",
+    nationality: "",
+    experience: "",
+    skills: "",
+    education: "",
+    city: "",
+    description: "",
+    githuburl: "",
+    followers: [],
+    following: [],
+    profilePicture: "",
+    backPicture: "",
+  };
+
   const userId = useParams().id;
-  const dispatch = useDispatch();
   const [posts, setPosts] = useState([]);
-  const [user, setUser] = useState({});
+  const [curruser, setCurruser] = useState(initialState);
+
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
 
   useEffect(() => {
     dispatch(userPosts(userId))
@@ -31,7 +52,7 @@ function Profile() {
     dispatch(getUser(userId))
       .unwrap()
       .then((res) => {
-        setUser(res);
+        setCurruser(res);
       })
       .catch((error) => {
         alert(error);
@@ -48,10 +69,44 @@ function Profile() {
 
   return (
     <div>
-      Hello {userId}
-      {user.name}
-      {user.surname}
-      {user.desc}
+      <div>
+        {curruser.backPicture ? (
+          <img
+            className="post-image"
+            src={`images/${curruser.backPicture}`}
+            alt="CoverPhoto"
+          />
+        ) : (
+          <p>Cover Photo</p>
+        )}
+      </div>
+      <div>
+        {curruser.profilePicture ? (
+          <img
+            className="post-image"
+            src={`images/${curruser.profilePicture}`}
+            alt="Profile Pic"
+          />
+        ) : (
+          <FaUserAlt />
+        )}
+      </div>
+      <div>
+        <span>{curruser.name}</span>
+        <span>{curruser.surname}</span>
+      </div>
+      <div>{curruser.description && curruser.description}</div>
+      <div>
+        <p>{curruser.email}</p>
+      </div>
+      <div>
+        <button>More Info</button>
+      </div>
+      <div>
+        Followers {curruser.followers.length}
+        Following {curruser.following.length}
+      </div>
+      <div>{user._id !== curruser._id && <button>Follow</button>}</div>
       {posts.map((post) => (
         <Post
           key={post._id}
