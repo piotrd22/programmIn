@@ -97,7 +97,7 @@ function Post({ post, del, update }) {
           {post.image && (
             <img
               className="post-image"
-              crossorigin="anonymous"
+              crossOrigin="anonymous"
               src={`http://localhost:8080/images/${post.image}`}
               alt="Post"
             />

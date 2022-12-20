@@ -1,40 +1,20 @@
-import { useParams } from "react-router";
 import { userPosts } from "../features/post/postSlice";
 import { getUser } from "../features/user/userSlice";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FaUserAlt } from "react-icons/fa";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import Post from "../components/Post";
 
 function Profile() {
-  const initialState = {
-    name: "",
-    surname: "",
-    email: "",
-    gender: "",
-    nationality: "",
-    experience: "",
-    skills: "",
-    education: "",
-    city: "",
-    description: "",
-    githuburl: "",
-    followers: [],
-    following: [],
-    profilePicture: "",
-    backPicture: "",
-  };
-
-  const userId = useParams().id;
-  const [posts, setPosts] = useState([]);
-  const [curruser, setCurruser] = useState(initialState);
-
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
 
+  const [posts, setPosts] = useState([]);
+  const [curruser, setCurruser] = useState(user);
+
   useEffect(() => {
-    dispatch(userPosts(userId))
+    dispatch(userPosts(user._id))
       .unwrap()
       .then((res) => {
         setPosts(
@@ -46,10 +26,10 @@ function Profile() {
       .catch((error) => {
         alert(error);
       });
-  }, [userId, dispatch]);
+  }, [user._id, dispatch]);
 
   useEffect(() => {
-    dispatch(getUser(userId))
+    dispatch(getUser(user._id))
       .unwrap()
       .then((res) => {
         setCurruser(res);
@@ -57,7 +37,7 @@ function Profile() {
       .catch((error) => {
         alert(error);
       });
-  }, [userId, dispatch]);
+  }, [user._id, dispatch]);
 
   const handleDelete = (id) => {
     setPosts(posts.filter((post) => post._id !== id));
@@ -72,8 +52,9 @@ function Profile() {
       <div>
         {curruser.backPicture ? (
           <img
+            crossOrigin="anonymous"
             className="post-image"
-            src={`images/${curruser.backPicture}`}
+            src={`http://localhost:8080/images/${curruser.backPicture}`}
             alt="CoverPhoto"
           />
         ) : (
@@ -83,8 +64,9 @@ function Profile() {
       <div>
         {curruser.profilePicture ? (
           <img
+            crossOrigin="anonymous"
             className="post-image"
-            src={`images/${curruser.profilePicture}`}
+            src={`http://localhost:8080/images/${curruser.profilePicture}`}
             alt="Profile Pic"
           />
         ) : (
