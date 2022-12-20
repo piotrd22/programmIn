@@ -1,6 +1,7 @@
 const bcrypt = require("bcrypt");
 const User = require("../schemas/UserSchema");
 const Post = require("../schemas/PostSchema");
+const fs = require("fs");
 
 const getUser = async (req, res) => {
   try {
@@ -14,9 +15,29 @@ const updateUser = async (req, res) => {
   const { password, admin } = req.body;
   const { id } = req.user;
 
+  const currUser = await User.findById(req.params.id);
+
   if (req.params.id === id || admin) {
     if ((await User.find({ email: req.body.email })).length === 1) {
       return res.status(405).send("Email is already taken");
+    }
+
+    if (req.body.profilePicture) {
+      try {
+        fs.unlinkSync(`api/public/images/${currUser.profilePicture}`);
+        console.log("File removed");
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    if (req.body.backPicture) {
+      try {
+        fs.unlinkSync(`api/public/images/${currUser.backPicture}`);
+        console.log("File removed");
+      } catch (error) {
+        console.error(error);
+      }
     }
 
     if (password) {
@@ -45,7 +66,27 @@ const deleteUser = async (req, res) => {
   const { admin } = req.body;
   const { id } = req.user;
 
+  const currUser = await User.findById(req.params.id);
+
   if (req.params.id === id || admin) {
+    if (currUser.profilePicture) {
+      try {
+        fs.unlinkSync(`api/public/images/${currUser.profilePicture}`);
+        console.log("File removed");
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    if (currUser.backPicture) {
+      try {
+        fs.unlinkSync(`api/public/images/${currUser.backPicture}`);
+        console.log("File removed");
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
     try {
       await User.findByIdAndDelete(req.params.id);
       await Post.deleteMany({ userId: req.params.id });
