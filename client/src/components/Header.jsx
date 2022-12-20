@@ -7,6 +7,7 @@ import {
   FaHome,
 } from "react-icons/fa";
 import { AiFillWechat } from "react-icons/ai";
+import { MdSettings } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../features/auth/authSlice";
@@ -43,6 +44,11 @@ function Header() {
             <li>
               <Link to={`/profile/${user._id}`}>
                 <FaUserAlt /> User Page
+              </Link>
+            </li>
+            <li>
+              <Link to={`/profile/${user._id}/update`}>
+                <MdSettings /> Update
               </Link>
             </li>
             <li>

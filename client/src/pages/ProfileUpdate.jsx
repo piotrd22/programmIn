@@ -2,15 +2,33 @@ import { useFormik } from "formik";
 import { countryList } from "../assets/Countries";
 import { FaUserAlt } from "react-icons/fa";
 import { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
 import { updateUser, getUser } from "../features/user/userSlice";
 import axios from "axios";
 
 function ProfileUpdate() {
-  const { user } = useSelector((state) => state.auth);
+  const id = useParams().id;
 
-  const [curruser, setCurruser] = useState(user);
+  const initialCurruser = {
+    _id: id,
+    name: "",
+    surname: "",
+    email: "",
+    password: "",
+    gender: "",
+    nationality: "",
+    experience: "",
+    skills: "",
+    education: "",
+    city: "",
+    description: "",
+    githuburl: "",
+    profilePicture: "",
+    backPicture: "",
+  };
+
+  const [curruser, setCurruser] = useState(initialCurruser);
   const [error, setError] = useState(false);
   const [file, setFile] = useState(null);
   const [fileback, setFileback] = useState(null);
@@ -19,7 +37,7 @@ function ProfileUpdate() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    dispatch(getUser(user._id))
+    dispatch(getUser(id))
       .unwrap()
       .then((res) => {
         setCurruser(res);
@@ -27,7 +45,7 @@ function ProfileUpdate() {
       .catch((error) => {
         alert(error);
       });
-  }, [user._id, dispatch]);
+  }, [id, dispatch]);
 
   const validate = (values) => {
     const errors = {};
@@ -133,9 +151,9 @@ function ProfileUpdate() {
         user.profilePicture = postName;
 
         const data2 = new FormData();
-        const postName2 = Date.now() + file.name;
+        const postName2 = Date.now() + fileback.name;
         data2.append("name", postName);
-        data2.append("file", file);
+        data2.append("file", fileback);
         user.backPicture = postName2;
         try {
           await axios.post("http://localhost:8080/api/upload/", data);
@@ -158,9 +176,9 @@ function ProfileUpdate() {
         update(userToSubmit);
       } else if (fileback) {
         const data = new FormData();
-        const postName = Date.now() + file.name;
+        const postName = Date.now() + fileback.name;
         data.append("name", postName);
-        data.append("file", file);
+        data.append("file", fileback);
         user.backPicture = postName;
         try {
           await axios.post("http://localhost:8080/api/upload/", data);

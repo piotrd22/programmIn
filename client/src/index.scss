@@ -13,7 +13,8 @@ $disablecol: rgb(190, 190, 190);
 
 body {
   font-family: "Poppins", sans-serif;
-  height: 100vh;
+  height: 100%;
+  width: 100%;
 }
 
 h1 {
@@ -60,6 +61,7 @@ li {
 }
 
 .header {
+  z-index: 9999;
   background-color: white;
   overflow: hidden;
   position: sticky;
@@ -69,7 +71,7 @@ li {
   align-items: center;
   padding: 20px 0;
   border-bottom: 1px solid $blackcol;
-  margin-bottom: 60px;
+  margin-bottom: 20px;
 
   ul {
     display: flex;
@@ -136,6 +138,7 @@ li {
 .form-post {
   width: 40%;
   margin: 0 auto;
+  margin-top: 40px;
 }
 
 .form-group-post {
@@ -371,4 +374,77 @@ li {
 
 .btn-comment:hover {
   transform: scale(0.98);
+}
+
+.user {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 20px;
+  text-align: center;
+  border-bottom: 1px solid #e6e6e6;
+
+  .back-photo {
+    img {
+      width: 100vh;
+      height: 40vh;
+      border-radius: 10px;
+    }
+  }
+
+  .profile-photo {
+    position: relative;
+    bottom: 10vh;
+    img {
+      width: 30vh;
+      height: 30vh;
+      border-radius: 50%;
+      overflow: hidden;
+      display: inline-block;
+      vertical-align: middle;
+    }
+  }
+
+  .name-surname {
+    position: relative;
+    bottom: 5vh;
+    font-size: xx-large;
+  }
+
+  .desc {
+    position: relative;
+    bottom: 5vh;
+    padding: 10px;
+    font-size: large;
+  }
+
+  .followers {
+    position: relative;
+    bottom: 3vh;
+
+    span {
+      margin-right: 20px;
+    }
+  }
+
+  .info {
+    align-items: center;
+
+    ul {
+      display: flex;
+      justify-content: center;
+      align-content: center;
+
+      li {
+        padding: 10px;
+
+        span {
+          margin-left: 5px;
+        }
+      }
+    }
+  }
 }
