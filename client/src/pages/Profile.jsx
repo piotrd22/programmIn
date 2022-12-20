@@ -3,6 +3,7 @@ import { userPosts } from "../features/post/postSlice";
 import { getUser } from "../features/user/userSlice";
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
+import { FaUserAlt } from "react-icons/fa";
 import Post from "../components/Post";
 
 function Profile() {

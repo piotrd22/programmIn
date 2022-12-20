@@ -11,9 +11,15 @@ const path = require("path");
 const app = express();
 dotenv.config();
 
+const corsOptions = {
+  origin: "*",
+  credentials: true,
+  optionSuccessStatus: 200,
+};
+
+app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cors());
 app.use(morgan("common"));
 app.use(helmet());
 app.use("/images", express.static(path.join(__dirname, "public/images")));

@@ -192,7 +192,7 @@ const homePosts = async (req, res) => {
       })
     );
 
-    res.status(200).send([...currUserPosts, ...followersPosts]);
+    res.status(200).send(currUserPosts.concat(...followersPosts));
   } catch (error) {
     res.status(500).send(error);
   }
