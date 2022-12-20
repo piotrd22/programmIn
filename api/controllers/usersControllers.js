@@ -15,6 +15,10 @@ const updateUser = async (req, res) => {
   const { id } = req.user;
 
   if (req.params.id === id || admin) {
+    if ((await User.find({ email: req.body.email })).length === 1) {
+      return res.status(405).send("Email is already taken");
+    }
+
     if (password) {
       try {
         const salt = await bcrypt.genSalt(10);
