@@ -2,33 +2,15 @@ import { useFormik } from "formik";
 import { countryList } from "../assets/Countries";
 import { FaUserAlt } from "react-icons/fa";
 import { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { updateUser, getUser } from "../features/user/userSlice";
+import Loader from "../components/Loader";
 import axios from "axios";
 
 function ProfileUpdate() {
   const id = useParams().id;
-
-  const initialCurruser = {
-    _id: id,
-    name: "",
-    surname: "",
-    email: "",
-    password: "",
-    gender: "",
-    nationality: "",
-    experience: "",
-    skills: "",
-    education: "",
-    city: "",
-    description: "",
-    githuburl: "",
-    profilePicture: "",
-    backPicture: "",
-  };
-
-  const [curruser, setCurruser] = useState(initialCurruser);
+  const { user, isLoading } = useSelector((state) => state.user);
   const [error, setError] = useState(false);
   const [file, setFile] = useState(null);
   const [fileback, setFileback] = useState(null);
@@ -39,9 +21,6 @@ function ProfileUpdate() {
   useEffect(() => {
     dispatch(getUser(id))
       .unwrap()
-      .then((res) => {
-        setCurruser(res);
-      })
       .catch((error) => {
         alert(error);
       });
@@ -84,19 +63,19 @@ function ProfileUpdate() {
   };
 
   const initialState = {
-    _id: curruser._id,
-    name: curruser.name,
-    surname: curruser.surname,
-    email: curruser.email,
+    _id: user._id,
+    name: user.name,
+    surname: user.surname,
+    email: user.email,
     password: "",
-    gender: curruser.gender,
-    nationality: curruser.nationality,
-    experience: curruser.experience,
-    skills: curruser.skills,
-    education: curruser.education,
-    city: curruser.city,
-    description: curruser.description,
-    githuburl: curruser.githuburl,
+    gender: user.gender,
+    nationality: user.nationality,
+    experience: user.experience,
+    skills: user.skills,
+    education: user.education,
+    city: user.city,
+    description: user.description,
+    githuburl: user.githuburl,
     profilePicture: "",
     backPicture: "",
   };
@@ -105,7 +84,7 @@ function ProfileUpdate() {
     const newuser = user;
     const keys = Object.keys(initialState);
 
-    keys.forEach((key, index) => {
+    keys.forEach((key) => {
       if (initialState[key] === newuser[key] && key !== "_id")
         delete newuser[key];
     });
@@ -194,6 +173,8 @@ function ProfileUpdate() {
 
   const genderList = ["male", "female", "other"];
 
+  if (isLoading) return <Loader />;
+
   return (
     <div className="ProfileUpdate">
       <section className="heading">
@@ -271,7 +252,7 @@ function ProfileUpdate() {
             >
               <option label="Select gender" />
               {genderList.map((gender, index) => {
-                if (gender === curruser.gender) {
+                if (gender === user.gender) {
                   return (
                     <option
                       value={gender}
@@ -308,7 +289,7 @@ function ProfileUpdate() {
             >
               <option label="Select nationality" />
               {countryList.map((country, index) => {
-                if (country === curruser.nationality) {
+                if (country === user.nationality) {
                   return (
                     <option
                       value={country}

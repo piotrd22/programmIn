@@ -3,7 +3,7 @@ import postService from "./postService";
 
 const initialState = {
   posts: [],
-  post: null,
+  isLoading: false,
 };
 
 export const createPost = createAsyncThunk(
@@ -143,10 +143,75 @@ export const userPosts = createAsyncThunk(
   }
 );
 
+const refreshPage = () => window.location.reload();
+
 export const postSlice = createSlice({
   name: "post",
   initialState,
-  extraReducers: (builder) => {},
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(homePosts.fulfilled, (state, action) => {
+        const sorted = action.payload.sort((x, y) => {
+          return new Date(y.createdAt) - new Date(x.createdAt);
+        });
+        state.posts = sorted;
+        state.isLoading = false;
+      })
+      .addCase(homePosts.rejected, (state) => {
+        state.isLoading = false;
+      })
+      .addCase(homePosts.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(createPost.fulfilled, (state, action) => {
+        if (action.payload.image) refreshPage();
+        state.posts = [action.payload, ...state.posts];
+        state.isLoading = false;
+      })
+      .addCase(createPost.rejected, (state) => {
+        state.isLoading = false;
+      })
+      .addCase(createPost.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(deletePost.fulfilled, (state, action) => {
+        state.posts = state.posts.filter((post) => post._id !== action.payload);
+        state.isLoading = false;
+      })
+      .addCase(deletePost.rejected, (state) => {
+        state.isLoading = false;
+      })
+      .addCase(deletePost.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(updatePost.fulfilled, (state, action) => {
+        if (action.payload.image) refreshPage();
+        state.posts = state.posts.map((post) =>
+          action.payload._id === post._id ? action.payload : post
+        );
+        state.isLoading = false;
+      })
+      .addCase(updatePost.rejected, (state) => {
+        state.isLoading = false;
+      })
+      .addCase(updatePost.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(userPosts.fulfilled, (state, action) => {
+        const sorted = action.payload.sort((x, y) => {
+          return new Date(y.createdAt) - new Date(x.createdAt);
+        });
+        state.posts = sorted;
+        state.isLoading = false;
+      })
+      .addCase(userPosts.rejected, (state) => {
+        state.isLoading = false;
+      })
+      .addCase(userPosts.pending, (state) => {
+        state.isLoading = true;
+      });
+  },
 });
 
 export default postSlice.reducer;

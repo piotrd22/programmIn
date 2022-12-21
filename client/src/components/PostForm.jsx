@@ -4,7 +4,7 @@ import { createPost } from "../features/post/postSlice";
 import { useState } from "react";
 import axios from "axios";
 
-function PostForm({ add }) {
+function PostForm() {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
   const [file, setFile] = useState(null);
@@ -20,19 +20,10 @@ function PostForm({ add }) {
 
   const reset = () => formik.resetForm();
 
-  const refreshPage = () => window.location.reload();
-
   const makePost = (post) => {
     dispatch(createPost(post))
       .unwrap()
-      .then((res) => {
-        if (res.image) {
-          refreshPage();
-        } else {
-          add(res);
-        }
-        reset();
-      })
+      .then(() => reset())
       .catch((error) => {
         alert(error);
       });

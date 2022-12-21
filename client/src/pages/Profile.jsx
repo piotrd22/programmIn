@@ -12,27 +12,20 @@ import { TiRefresh } from "react-icons/ti";
 import { Link, useParams } from "react-router-dom";
 import Post from "../components/Post";
 import PostForm from "../components/PostForm";
+import Loader from "../components/Loader";
 
 function Profile() {
   const id = useParams().id;
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.auth);
+  const { user, isLoading } = useSelector((state) => state.user);
+  const { posts } = useSelector((state) => state.post);
 
-  const [posts, setPosts] = useState([]);
   const [postsLen, setPostLen] = useState(0);
-  const [curruser, setCurruser] = useState(user);
 
   useEffect(() => {
     dispatch(userPosts(id))
       .unwrap()
-      .then((res) => {
-        setPosts(
-          res.sort((x, y) => {
-            return new Date(y.createdAt) - new Date(x.createdAt);
-          })
-        );
-        setPostLen(res.length);
-      })
+      .then((res) => setPostLen(res.length))
       .catch((error) => {
         alert(error);
       });
@@ -41,36 +34,26 @@ function Profile() {
   useEffect(() => {
     dispatch(getUser(id))
       .unwrap()
-      .then((res) => {
-        setCurruser(res);
-      })
+      // .then((res) => {
+      //   setCurruser(res);
+      // })
       .catch((error) => {
         alert(error);
       });
   }, [id, dispatch]);
 
-  const handleDelete = (id) => {
-    setPosts(posts.filter((post) => post._id !== id));
-  };
-
-  const handleUpdate = (newPost) => {
-    setPosts(posts.map((post) => (newPost._id === post._id ? newPost : post)));
-  };
-
-  const handleAdd = (post) => {
-    setPosts([post, ...posts]);
-  };
+  if (isLoading) return <Loader />;
 
   return (
     <div>
       <div className="user">
         <div className="back-photo">
           <div>
-            {curruser.backPicture ? (
+            {user.backPicture ? (
               <img
                 crossOrigin="anonymous"
                 className="post-image"
-                src={`http://localhost:8080/images/${curruser.backPicture}`}
+                src={`http://localhost:8080/images/${user.backPicture}`}
                 alt="CoverPhoto"
               />
             ) : (
@@ -80,11 +63,11 @@ function Profile() {
         </div>
         <div className="profile-photo">
           <div>
-            {curruser.profilePicture ? (
+            {user.profilePicture ? (
               <img
                 crossOrigin="anonymous"
                 className="post-image"
-                src={`http://localhost:8080/images/${curruser.profilePicture}`}
+                src={`http://localhost:8080/images/${user.profilePicture}`}
                 alt="Profile Pic"
               />
             ) : (
@@ -95,21 +78,21 @@ function Profile() {
         <div className="name-surname">
           <div>
             <h4>
-              {curruser.name} {curruser.surname}
+              {user.name} {user.surname}
             </h4>
           </div>
         </div>
-        {curruser.description && (
+        {user.description && (
           <div className="desc">
             <div>
-              <span>{curruser.description}</span>
+              <span>{user.description}</span>
             </div>
           </div>
         )}
         <div className="followers">
           <span>Posts {postsLen}</span>
-          <span>Followers {curruser.followers.length}</span>
-          <span>Following {curruser.following.length}</span>
+          <span>Followers {user.followers.length}</span>
+          <span>Following {user.following.length}</span>
         </div>
         <div className="button">
           {user._id !== id && <button>Follow</button>}
@@ -126,20 +109,20 @@ function Profile() {
           <ul>
             <li>
               <FaMailBulk />
-              <span>{curruser.email}</span>
+              <span>{user.email}</span>
             </li>
-            {curruser.githuburl && (
+            {user.githuburl && (
               <li>
-                <a href={curruser.githuburl}>
+                <a href={user.githuburl}>
                   <FaGithub />
-                  <span>{curruser.githuburl}</span>
+                  <span>{user.githuburl}</span>
                 </a>
               </li>
             )}
             <li>
               <FaMapMarkerAlt />
               <span>
-                {curruser.nationality} {curruser.city && curruser.city}
+                {user.nationality} {user.city && user.city}
               </span>
             </li>
           </ul>
@@ -149,14 +132,9 @@ function Profile() {
         </div>
       </div>
       <div>
-        {user._id === id && <PostForm add={handleAdd} />}
+        {user._id === id && <PostForm />}
         {posts.map((post) => (
-          <Post
-            key={post._id}
-            post={post}
-            del={handleDelete}
-            update={handleUpdate}
-          />
+          <Post key={post._id} post={post} />
         ))}
       </div>
     </div>

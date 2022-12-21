@@ -4,7 +4,7 @@ import { updatePost } from "../features/post/postSlice";
 import { useState } from "react";
 import axios from "axios";
 
-function PostUpdateForm({ post, update, updateHandler }) {
+function PostUpdateForm({ post, updateHandler }) {
   const dispatch = useDispatch();
   const [file, setFile] = useState(null);
 
@@ -17,19 +17,10 @@ function PostUpdateForm({ post, update, updateHandler }) {
     return errors;
   };
 
-  const refreshPage = () => window.location.reload();
-
-  const makePost = (post) => {
+  const newPost = (post) => {
     dispatch(updatePost(post))
       .unwrap()
-      .then((res) => {
-        if (res.image) {
-          refreshPage();
-        } else {
-          update(res);
-        }
-        updateHandler();
-      })
+      .then(() => updateHandler())
       .catch((error) => {
         alert(error);
       });
@@ -59,9 +50,9 @@ function PostUpdateForm({ post, update, updateHandler }) {
         } catch (error) {
           alert(error);
         }
-        makePost(post);
+        newPost(post);
       } else {
-        makePost(post);
+        newPost(post);
       }
     },
   });

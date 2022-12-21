@@ -1,52 +1,30 @@
 import PostForm from "../components/PostForm";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { homePosts } from "../features/post/postSlice";
 import Post from "../components/Post";
+import Loader from "../components/Loader";
 
 function Feed() {
   const { user } = useSelector((state) => state.auth);
+  const { posts, isLoading } = useSelector((state) => state.post);
   const dispatch = useDispatch();
-
-  const [posts, setPosts] = useState([]);
 
   useEffect(() => {
     dispatch(homePosts())
       .unwrap()
-      .then((res) => {
-        setPosts(
-          res.sort((x, y) => {
-            return new Date(y.createdAt) - new Date(x.createdAt);
-          })
-        );
-      })
       .catch((error) => {
         alert(error);
       });
   }, [user._id, dispatch]);
 
-  const handleAdd = (post) => {
-    setPosts([post, ...posts]);
-  };
-
-  const handleDelete = (id) => {
-    setPosts(posts.filter((post) => post._id !== id));
-  };
-
-  const handleUpdate = (newPost) => {
-    setPosts(posts.map((post) => (newPost._id === post._id ? newPost : post)));
-  };
+  if (isLoading) return <Loader />;
 
   return (
     <div>
-      <PostForm add={handleAdd} />
+      <PostForm />
       {posts.map((post) => (
-        <Post
-          key={post._id}
-          post={post}
-          del={handleDelete}
-          update={handleUpdate}
-        />
+        <Post key={post._id} post={post} />
       ))}
     </div>
   );

@@ -8,7 +8,7 @@ import PostUpdateForm from "./PostUpdateForm";
 import CommentForm from "./CommentForm";
 import Comment from "./Comment";
 
-function Post({ post, del, update }) {
+function Post({ post }) {
   const [like, setLike] = useState(post.likes.length);
   const [isLiked, setIsLiked] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
@@ -16,8 +16,15 @@ function Post({ post, del, update }) {
   const [commentLen, setCommentLen] = useState(post.comments.length);
   const [comments, setComments] = useState([]);
   const { user } = useSelector((state) => state.auth);
-
   const dispatch = useDispatch();
+
+  const deleteHandler = () => {
+    dispatch(deletePost(post._id))
+      .unwrap()
+      .catch((error) => {
+        alert(error);
+      });
+  };
 
   useEffect(() => {
     setIsLiked(post.likes.includes(user._id));
@@ -40,17 +47,6 @@ function Post({ post, del, update }) {
       .then(() => {
         setLike(isLiked ? like - 1 : like + 1);
         setIsLiked(!isLiked);
-      })
-      .catch((error) => {
-        alert(error);
-      });
-  };
-
-  const deleteHandler = () => {
-    dispatch(deletePost(post._id))
-      .unwrap()
-      .then((res) => {
-        del(res);
       })
       .catch((error) => {
         alert(error);
@@ -131,11 +127,7 @@ function Post({ post, del, update }) {
         )}
       </div>
       {isUpdating && (
-        <PostUpdateForm
-          post={post}
-          update={update}
-          updateHandler={updateHandler}
-        />
+        <PostUpdateForm post={post} updateHandler={updateHandler} />
       )}
     </div>
   );
