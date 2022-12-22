@@ -81,7 +81,7 @@ const likePost = async (req, res) => {
     const { id } = req.user;
     const post = await Post.findById(req.params.id);
 
-    if (post.likes.filter((x) => x === id).length === 1) {
+    if (post.likes.includes(id)) {
       await post.updateOne({ $pull: { likes: id } });
       res.status(200).send("Post has been disliked");
     } else {
@@ -100,7 +100,14 @@ const commentPost = async (req, res) => {
     const post = await Post.findById(req.params.id);
 
     await post.updateOne({
-      $push: { comments: { postedBy: id, desc: desc, id: uuidv4() } },
+      $push: {
+        comments: {
+          postId: req.params.id,
+          postedBy: id,
+          desc: desc,
+          id: uuidv4(),
+        },
+      },
     });
 
     const newPost = await Post.findById(req.params.id);

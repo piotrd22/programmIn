@@ -34,9 +34,6 @@ function Profile() {
   useEffect(() => {
     dispatch(getUser(id))
       .unwrap()
-      // .then((res) => {
-      //   setCurruser(res);
-      // })
       .catch((error) => {
         alert(error);
       });
