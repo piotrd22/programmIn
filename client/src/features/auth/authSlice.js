@@ -38,6 +38,8 @@ export const logout = createAsyncThunk("auth/logout", async () => {
   await authService.logout();
 });
 
+const refreshPage = () => window.location.reload();
+
 export const authSlice = createSlice({
   name: "auth",
   initialState,
@@ -48,18 +50,18 @@ export const authSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(signup.fulfilled, (state, action) => {
-        state.user = action.payload;
         state.isLoading = false;
       })
       .addCase(signup.rejected, (state, action) => {
         state.isLoading = false;
       })
       .addCase(signin.pending, (state) => {
-        state.isLoading = false;
+        state.isLoading = true;
       })
       .addCase(signin.fulfilled, (state, action) => {
         state.user = action.payload;
         state.isLoading = false;
+        refreshPage();
       })
       .addCase(signin.rejected, (state) => {
         state.isLoading = false;

@@ -4,7 +4,8 @@ import { FaUserAlt } from "react-icons/fa";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { updateUser, getUser } from "../features/user/userSlice";
+import { updateUser, getUser, deleteUser } from "../features/user/userSlice";
+import { logout } from "../features/auth/authSlice";
 import Loader from "../components/Loader";
 import axios from "axios";
 
@@ -172,6 +173,21 @@ function ProfileUpdate() {
   });
 
   const genderList = ["male", "female", "other"];
+
+  const refreshPage = () => window.location.reload();
+
+  const deleteAccount = () => {
+    dispatch(deleteUser(user))
+      .unwrap()
+      .then(() => {
+        navigate("/");
+        dispatch(logout());
+        refreshPage();
+      })
+      .catch((error) => {
+        alert(error);
+      });
+  };
 
   if (isLoading) return <Loader />;
 
@@ -415,6 +431,16 @@ function ProfileUpdate() {
             Submit
           </button>
         </form>
+      </section>
+      <section className="form">
+        <h4>Delete account</h4>
+        <p>
+          Once you delete your account, there is no going back. Please be
+          certain.
+        </p>
+        <button className="btn btn-block" onClick={deleteAccount}>
+          Delete your account
+        </button>
       </section>
     </div>
   );

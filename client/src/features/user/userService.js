@@ -31,6 +31,21 @@ const updateUser = async (userId, userData, token) => {
   return res.data;
 };
 
-const userService = { getUser, updateUser };
+const deleteUser = async (userData, token) => {
+  const config = {
+    headers: {
+      token: "Bearer " + token,
+    },
+  };
+
+  const res = await axios.delete(
+    `http://localhost:8080/api/users/${userData._id}`,
+    config
+  );
+
+  return res.data;
+};
+
+const userService = { getUser, updateUser, deleteUser };
 
 export default userService;
