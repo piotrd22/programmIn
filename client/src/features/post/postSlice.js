@@ -169,21 +169,9 @@ export const postSlice = createSlice({
         state.posts = [action.payload, ...state.posts];
         state.isLoading = false;
       })
-      .addCase(createPost.rejected, (state) => {
-        state.isLoading = false;
-      })
-      .addCase(createPost.pending, (state) => {
-        state.isLoading = true;
-      })
       .addCase(deletePost.fulfilled, (state, action) => {
         state.posts = state.posts.filter((post) => post._id !== action.payload);
         state.isLoading = false;
-      })
-      .addCase(deletePost.rejected, (state) => {
-        state.isLoading = false;
-      })
-      .addCase(deletePost.pending, (state) => {
-        state.isLoading = true;
       })
       .addCase(updatePost.fulfilled, (state, action) => {
         if (action.payload.image) refreshPage();
@@ -191,12 +179,6 @@ export const postSlice = createSlice({
           action.payload._id === post._id ? action.payload : post
         );
         state.isLoading = false;
-      })
-      .addCase(updatePost.rejected, (state) => {
-        state.isLoading = false;
-      })
-      .addCase(updatePost.pending, (state) => {
-        state.isLoading = true;
       })
       .addCase(userPosts.fulfilled, (state, action) => {
         const sorted = action.payload.sort((x, y) => {
