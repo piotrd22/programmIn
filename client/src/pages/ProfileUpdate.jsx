@@ -108,6 +108,7 @@ function ProfileUpdate() {
       .unwrap()
       .then(() => {
         navigate(`/profile/${userToSubmit._id}`);
+        refreshPage();
       })
       .catch((error) => {
         const error_array = error.split(" ");

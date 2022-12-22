@@ -4,6 +4,7 @@ import { TiDelete, TiRefresh } from "react-icons/ti";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { likePost, deletePost, getComments } from "../features/post/postSlice";
+import { Link } from "react-router-dom";
 import PostUpdateForm from "./PostUpdateForm";
 import CommentForm from "./CommentForm";
 import Comment from "./Comment";
@@ -80,7 +81,7 @@ function Post({ post }) {
       <div className="post">
         <div className="post-div">
           <div>
-            <p>{post.userId}</p>
+            <Link to={`/profile/${post.userId}`}>{post.username}</Link>
             <p className="date">{post.createdAt.slice(0, 10)}</p>
           </div>
           <div>

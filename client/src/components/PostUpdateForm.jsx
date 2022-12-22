@@ -36,6 +36,7 @@ function PostUpdateForm({ post, updateHandler }) {
       _id: post._id,
       image: "",
       desc: post.desc,
+      username: post.username,
     },
     validate,
     onSubmit: async (post) => {

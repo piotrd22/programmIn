@@ -2,21 +2,19 @@ import { userPosts } from "../features/post/postSlice";
 import { getUser } from "../features/user/userSlice";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  FaUserAlt,
-  FaGithub,
-  FaMailBulk,
-  FaMapMarkerAlt,
-} from "react-icons/fa";
+import { FaGithub, FaMailBulk, FaMapMarkerAlt } from "react-icons/fa";
 import { TiRefresh } from "react-icons/ti";
 import { Link, useParams } from "react-router-dom";
 import Post from "../components/Post";
 import PostForm from "../components/PostForm";
 import Loader from "../components/Loader";
+import profile from "../assets/profile.png";
+import back from "../assets/back.png";
 
 function Profile() {
   const id = useParams().id;
   const dispatch = useDispatch();
+  const { user: curruser } = useSelector((state) => state.auth);
   const { user, isLoading } = useSelector((state) => state.user);
   const { posts } = useSelector((state) => state.post);
 
@@ -54,7 +52,7 @@ function Profile() {
                 alt="CoverPhoto"
               />
             ) : (
-              <p>Cover Photo</p>
+              <img className="post-image" src={back} alt="CoverPhoto" />
             )}
           </div>
         </div>
@@ -68,7 +66,7 @@ function Profile() {
                 alt="Profile Pic"
               />
             ) : (
-              <FaUserAlt />
+              <img className="post-image" src={profile} alt="CoverPhoto" />
             )}
           </div>
         </div>
@@ -92,8 +90,8 @@ function Profile() {
           <span>Following {user.following.length}</span>
         </div>
         <div className="button">
-          {user._id !== id && <button>Follow</button>}
-          {user._id === id && (
+          {curruser._id !== id && <button>Follow</button>}
+          {curruser._id === id && (
             <Link to={`/profile/${user._id}/update`}>
               <button>
                 <TiRefresh /> Update profile

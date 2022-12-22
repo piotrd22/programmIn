@@ -38,6 +38,7 @@ function PostForm() {
     initialValues: {
       image: "",
       desc: "",
+      username: `${user.name} ${user.surname}`,
     },
     validate,
     onSubmit: async (post) => {
