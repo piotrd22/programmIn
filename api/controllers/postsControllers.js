@@ -96,7 +96,7 @@ const likePost = async (req, res) => {
 const commentPost = async (req, res) => {
   try {
     const { id } = req.user;
-    const { desc } = req.body;
+    const { desc, username } = req.body;
     const post = await Post.findById(req.params.id);
 
     await post.updateOne({
@@ -104,6 +104,7 @@ const commentPost = async (req, res) => {
         comments: {
           postId: req.params.id,
           postedBy: id,
+          username: username,
           desc: desc,
           id: uuidv4(),
         },

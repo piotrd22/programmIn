@@ -6,7 +6,6 @@ import { FaGithub, FaMailBulk, FaMapMarkerAlt } from "react-icons/fa";
 import { TiRefresh } from "react-icons/ti";
 import { Link, useParams } from "react-router-dom";
 import Post from "../components/Post";
-import PostForm from "../components/PostForm";
 import Loader from "../components/Loader";
 import profile from "../assets/profile.png";
 import back from "../assets/back.png";
