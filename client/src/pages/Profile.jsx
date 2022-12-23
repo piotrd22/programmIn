@@ -117,17 +117,27 @@ function Profile() {
           <span>Following {user.following.length}</span>
         </div>
         <div className="button">
-          {curruser._id !== id && (
-            <button onClick={followHandler}>Follow</button>
-          )}
+          {curruser._id !== id &&
+            (isFollowed ? (
+              <button className="btn-follow" onClick={followHandler}>
+                Unfollow
+              </button>
+            ) : (
+              <button className="btn-unfollow" onClick={followHandler}>
+                Follow
+              </button>
+            ))}
           {curruser._id === id && (
             <Link to={`/profile/${user._id}/update`}>
-              <button>
+              <button className="btn-follow">
                 <TiRefresh /> Update profile
               </button>
             </Link>
           )}
-          <button>More</button>
+          <Link to={`/profile/${user._id}/more`}>
+            {" "}
+            <button className="btn-follow">More</button>
+          </Link>
         </div>
         <div className="info">
           <ul>

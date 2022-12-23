@@ -14,6 +14,7 @@ import Feed from "./pages/Feed";
 import NotFound from "./pages/NotFound";
 import Profile from "./pages/Profile";
 import ProfileUpdate from "./pages/ProfileUpdate";
+import More from "./pages/More";
 
 function App() {
   const { user } = useSelector((state) => state.auth);
@@ -43,6 +44,10 @@ function App() {
             <Route
               path="/profile/:id"
               element={user ? <Profile /> : <Navigate to="/" />}
+            />
+            <Route
+              path="/profile/:id/more"
+              element={user ? <More /> : <Navigate to="/" />}
             />
             <Route
               path="/profile/:id/update"
