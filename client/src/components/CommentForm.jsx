@@ -21,6 +21,7 @@ function CommentForm({ post, add }) {
     initialValues: {
       desc: "",
       postId: post._id,
+      username: `${user.name} ${user.surname}`,
     },
     validate,
     onSubmit: (comment) => {

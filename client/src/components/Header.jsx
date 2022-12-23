@@ -48,7 +48,7 @@ function Header() {
             </li>
             <li>
               <Link to={`/profile/${user._id}/update`}>
-                <MdSettings /> Update
+                <MdSettings /> Settings
               </Link>
             </li>
             <li>

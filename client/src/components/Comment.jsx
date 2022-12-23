@@ -2,6 +2,7 @@ import { TiDelete, TiRefresh } from "react-icons/ti";
 import { useDispatch } from "react-redux";
 import { uncommentPost } from "../features/post/postSlice";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import CommentUpdateForm from "./CommentUpdateForm";
 
 function Comment({ comment, post, del, update }) {
@@ -33,7 +34,7 @@ function Comment({ comment, post, del, update }) {
   return (
     <div>
       <div className="comment">
-        <p>{comment.postedBy}</p>
+        <Link to={`/profile/${comment.postedBy}`}>{comment.username}</Link>
         <p>{comment.desc}</p>
         <div>
           <TiRefresh className="update" onClick={updateHandler} />

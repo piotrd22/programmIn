@@ -1,5 +1,5 @@
 import { userPosts } from "../features/post/postSlice";
-import { getUser } from "../features/user/userSlice";
+import { getUser, followUser, unfollowUser } from "../features/user/userSlice";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FaGithub, FaMailBulk, FaMapMarkerAlt } from "react-icons/fa";
@@ -17,12 +17,12 @@ function Profile() {
   const { user, isLoading } = useSelector((state) => state.user);
   const { posts } = useSelector((state) => state.post);
 
-  const [postsLen, setPostLen] = useState(0);
+  const [followersLen, setFollowersLen] = useState(user.followers.length);
+  const [isFollowed, setIsFollowed] = useState(false);
 
   useEffect(() => {
     dispatch(userPosts(id))
       .unwrap()
-      .then((res) => setPostLen(res.length))
       .catch((error) => {
         alert(error);
       });
@@ -35,6 +35,34 @@ function Profile() {
         alert(error);
       });
   }, [id, dispatch]);
+
+  useEffect(() => {
+    setIsFollowed(user.followers.includes(curruser._id));
+  }, [curruser._id, user.followers]);
+
+  const followHandler = () => {
+    if (isFollowed) {
+      dispatch(unfollowUser(user))
+        .unwrap()
+        .then(() => {
+          setFollowersLen(followersLen - 1);
+          setIsFollowed(!isFollowed);
+        })
+        .catch((error) => {
+          alert(error);
+        });
+    } else {
+      dispatch(followUser(user))
+        .unwrap()
+        .then(() => {
+          setFollowersLen(followersLen + 1);
+          setIsFollowed(!isFollowed);
+        })
+        .catch((error) => {
+          alert(error);
+        });
+    }
+  };
 
   if (isLoading) return <Loader />;
 
@@ -84,12 +112,14 @@ function Profile() {
           </div>
         )}
         <div className="followers">
-          <span>Posts {postsLen}</span>
-          <span>Followers {user.followers.length}</span>
+          <span>Posts {posts.length}</span>
+          <span>Followers {followersLen}</span>
           <span>Following {user.following.length}</span>
         </div>
         <div className="button">
-          {curruser._id !== id && <button>Follow</button>}
+          {curruser._id !== id && (
+            <button onClick={followHandler}>Follow</button>
+          )}
           {curruser._id === id && (
             <Link to={`/profile/${user._id}/update`}>
               <button>
@@ -126,7 +156,6 @@ function Profile() {
         </div>
       </div>
       <div>
-        {user._id === id && <PostForm />}
         {posts.map((post) => (
           <Post key={post._id} post={post} />
         ))}

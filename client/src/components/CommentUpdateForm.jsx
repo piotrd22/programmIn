@@ -19,6 +19,7 @@ function CommentUpdateForm({ post, update, comment, updateHandler }) {
       id: comment.id,
       desc: comment.desc,
       postId: post._id,
+      username: comment.username,
     },
     validate,
     onSubmit: (comment) => {

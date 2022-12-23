@@ -46,6 +46,44 @@ const deleteUser = async (userData, token) => {
   return res.data;
 };
 
-const userService = { getUser, updateUser, deleteUser };
+const followUser = async (userData, token) => {
+  const config = {
+    headers: {
+      token: "Bearer " + token,
+    },
+  };
+
+  const res = await axios.put(
+    `http://localhost:8080/api/users/${userData._id}/follow`,
+    userData,
+    config
+  );
+
+  return res.data;
+};
+
+const unfollowUser = async (userData, token) => {
+  const config = {
+    headers: {
+      token: "Bearer " + token,
+    },
+  };
+
+  const res = await axios.put(
+    `http://localhost:8080/api/users/${userData._id}/unfollow`,
+    userData,
+    config
+  );
+
+  return res.data;
+};
+
+const userService = {
+  getUser,
+  updateUser,
+  deleteUser,
+  followUser,
+  unfollowUser,
+};
 
 export default userService;

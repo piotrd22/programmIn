@@ -50,6 +50,34 @@ export const deleteUser = createAsyncThunk(
   }
 );
 
+export const followUser = createAsyncThunk(
+  "user/follow",
+  async (userData, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.accessToken;
+      return await userService.followUser(userData, token);
+    } catch (error) {
+      const message =
+        error.response?.data?.message || error.message || error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+export const unfollowUser = createAsyncThunk(
+  "user/follow",
+  async (userData, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.accessToken;
+      return await userService.unfollowUser(userData, token);
+    } catch (error) {
+      const message =
+        error.response?.data?.message || error.message || error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 export const userSlice = createSlice({
   name: "user",
   initialState,
