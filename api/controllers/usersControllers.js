@@ -145,4 +145,30 @@ const unfollowUser = async (req, res) => {
   }
 };
 
-module.exports = { getUser, updateUser, deleteUser, followUser, unfollowUser };
+const getUserFollowers = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    res.status(200).send(user.followers);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
+
+const getUserFollowing = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    res.status(200).send(user.following);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
+
+module.exports = {
+  getUser,
+  updateUser,
+  deleteUser,
+  followUser,
+  unfollowUser,
+  getUserFollowers,
+  getUserFollowing,
+};
