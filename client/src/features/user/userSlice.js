@@ -80,10 +80,10 @@ export const unfollowUser = createAsyncThunk(
 
 export const getUserFollowers = createAsyncThunk(
   "user/followers",
-  async (userData, thunkAPI) => {
+  async (userId, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.accessToken;
-      return await userService.getUserFollowers(userData, token);
+      return await userService.getUserFollowers(userId, token);
     } catch (error) {
       const message =
         error.response?.data?.message || error.message || error.toString();
@@ -94,10 +94,10 @@ export const getUserFollowers = createAsyncThunk(
 
 export const getUserFollowing = createAsyncThunk(
   "user/following",
-  async (userData, thunkAPI) => {
+  async (userId, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.accessToken;
-      return await userService.getUserFollowing(userData, token);
+      return await userService.getUserFollowing(userId, token);
     } catch (error) {
       const message =
         error.response?.data?.message || error.message || error.toString();

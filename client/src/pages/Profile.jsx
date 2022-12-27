@@ -112,8 +112,12 @@ function Profile() {
           </div>
         )}
         <div className="followers">
-          <span>Followers {followersLen}</span>
-          <span>Following {user.following.length}</span>
+          <Link to={`/profile/${user._id}/followers`}>
+            Followers {followersLen}
+          </Link>
+          <Link to={`/profile/${user._id}/followings`}>
+            Following {user.following.length}
+          </Link>
         </div>
         <div className="button">
           {curruser._id !== id &&
