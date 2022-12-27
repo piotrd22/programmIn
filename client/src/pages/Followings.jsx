@@ -28,7 +28,7 @@ function Followers() {
       </section>
 
       <section>
-        <div>
+        <div className="followers-list">
           <ul>
             {followers.map((follower, index) => {
               return (
