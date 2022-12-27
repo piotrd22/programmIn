@@ -78,6 +78,34 @@ export const unfollowUser = createAsyncThunk(
   }
 );
 
+export const getUserFollowers = createAsyncThunk(
+  "user/followers",
+  async (userData, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.accessToken;
+      return await userService.getUserFollowers(userData, token);
+    } catch (error) {
+      const message =
+        error.response?.data?.message || error.message || error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+export const getUserFollowing = createAsyncThunk(
+  "user/following",
+  async (userData, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.accessToken;
+      return await userService.getUserFollowing(userData, token);
+    } catch (error) {
+      const message =
+        error.response?.data?.message || error.message || error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 export const userSlice = createSlice({
   name: "user",
   initialState,
@@ -112,6 +140,24 @@ export const userSlice = createSlice({
       })
       .addCase(deleteUser.pending, (state) => {
         state.isLoading = true;
+      })
+      .addCase(getUserFollowers.fulfilled, (state) => {
+        state.isLoading = false;
+      })
+      .addCase(getUserFollowers.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getUserFollowers.rejected, (state) => {
+        state.isLoading = false;
+      })
+      .addCase(getUserFollowing.fulfilled, (state) => {
+        state.isLoading = false;
+      })
+      .addCase(getUserFollowing.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getUserFollowing.rejected, (state) => {
+        state.isLoading = false;
       });
   },
 });
