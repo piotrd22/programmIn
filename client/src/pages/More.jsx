@@ -2,7 +2,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { getUser } from "../features/user/userSlice";
-import { FaUserAlt } from "react-icons/fa";
+import {
+  FaUserAlt,
+  FaGithub,
+  FaMailBulk,
+  FaPhone,
+  FaBirthdayCake,
+  FaTransgenderAlt,
+} from "react-icons/fa";
 import Loader from "../components/Loader";
 
 function More() {
@@ -30,9 +37,78 @@ function More() {
 
       <section>
         {user.description && (
-          <div className="form-group">
+          <div className="more">
             <label>Description</label>
             <span>{user.description}</span>
+          </div>
+        )}
+        {user.city ? (
+          <div className="more">
+            <label>Place of residence</label>
+            <span>
+              {user.nationality}, {user.city}
+            </span>
+          </div>
+        ) : (
+          <div className="more">
+            <label>Place of residence</label>
+            <span>{user.nationality}</span>
+          </div>
+        )}
+        <div className="more more-ul">
+          <label>Contact information</label>
+          <ul>
+            <li>
+              <FaMailBulk />
+              <span>{user.email}</span>
+            </li>
+            {user.githuburl && (
+              <li>
+                <a href={user.githuburl}>
+                  <FaGithub />
+                  <span>{user.githuburl}</span>
+                </a>
+              </li>
+            )}
+            {user.email && (
+              <li>
+                <FaPhone />
+                <span>{user.email}</span>
+              </li>
+            )}
+          </ul>
+        </div>
+        <div className="more more-ul">
+          <label>Info</label>
+          <ul>
+            <li>
+              <FaTransgenderAlt />
+              <span>{user.gender}</span>
+            </li>
+            {user.githuburl && (
+              <li>
+                <FaBirthdayCake />
+                <span>{user.githuburl}</span>
+              </li>
+            )}
+          </ul>
+        </div>
+        {user.experience && (
+          <div className="more">
+            <label>Experience</label>
+            <span>{user.experience}</span>
+          </div>
+        )}
+        {user.skills && (
+          <div className="more">
+            <label>Skills</label>
+            <span>{user.skills}</span>
+          </div>
+        )}
+        {user.education && (
+          <div className="more">
+            <label>Education</label>
+            <span>{user.education}</span>
           </div>
         )}
       </section>

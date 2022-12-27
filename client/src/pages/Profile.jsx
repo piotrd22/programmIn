@@ -2,13 +2,13 @@ import { userPosts } from "../features/post/postSlice";
 import { getUser, followUser, unfollowUser } from "../features/user/userSlice";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { FaGithub, FaMailBulk, FaMapMarkerAlt } from "react-icons/fa";
 import { TiRefresh } from "react-icons/ti";
 import { Link, useParams } from "react-router-dom";
 import Post from "../components/Post";
 import Loader from "../components/Loader";
 import profile from "../assets/profile.png";
 import back from "../assets/back.png";
+import PostForm from "../components/PostForm";
 
 function Profile() {
   const id = useParams().id;
@@ -112,7 +112,6 @@ function Profile() {
           </div>
         )}
         <div className="followers">
-          <span>Posts {posts.length}</span>
           <span>Followers {followersLen}</span>
           <span>Following {user.following.length}</span>
         </div>
@@ -135,37 +134,12 @@ function Profile() {
             </Link>
           )}
           <Link to={`/profile/${user._id}/more`}>
-            {" "}
             <button className="btn-follow">More</button>
           </Link>
         </div>
-        <div className="info">
-          <ul>
-            <li>
-              <FaMailBulk />
-              <span>{user.email}</span>
-            </li>
-            {user.githuburl && (
-              <li>
-                <a href={user.githuburl}>
-                  <FaGithub />
-                  <span>{user.githuburl}</span>
-                </a>
-              </li>
-            )}
-            <li>
-              <FaMapMarkerAlt />
-              <span>
-                {user.nationality} {user.city && user.city}
-              </span>
-            </li>
-          </ul>
-        </div>
-        <div className="button">
-          <div></div>
-        </div>
       </div>
       <div>
+        {curruser._id === user._id && <PostForm />}
         {posts.map((post) => (
           <Post key={post._id} post={post} />
         ))}

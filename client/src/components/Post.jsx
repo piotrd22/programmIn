@@ -84,10 +84,12 @@ function Post({ post }) {
             <Link to={`/profile/${post.userId}`}>{post.username}</Link>
             <p className="date">{post.createdAt.slice(0, 10)}</p>
           </div>
-          <div>
-            <TiRefresh className="update" onClick={updateHandler} />
-            <TiDelete className="delete" onClick={deleteHandler} />
-          </div>
+          {user._id === post.userId && (
+            <div>
+              <TiRefresh className="update" onClick={updateHandler} />
+              <TiDelete className="delete" onClick={deleteHandler} />
+            </div>
+          )}
         </div>
         <div className="post-desc">
           <span>{post?.desc}</span>

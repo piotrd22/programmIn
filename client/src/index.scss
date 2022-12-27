@@ -53,6 +53,15 @@ li {
   line-height: 2.2;
 }
 
+input::file-selector-button {
+  font-weight: bold;
+  color: $orangecol;
+  padding: 0.5em;
+  border: 1px solid #e6e6e6;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
 .container {
   width: 100%;
   margin: 0 auto;
@@ -395,29 +404,71 @@ li {
   .desc {
     position: relative;
     bottom: 5vh;
-    padding: 10px;
+    width: 100vh;
     font-size: large;
+    margin: 10px 0;
   }
 
   .followers {
     position: relative;
     bottom: 3vh;
-
     span {
-      margin-right: 20px;
+      margin-left: 10px;
+    }
+  }
+
+  .button {
+    margin-bottom: 20px;
+
+    .btn-follow {
+      padding: 10px 20px;
+      border-radius: 5px;
+      background: $blackcol;
+      color: white;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      text-align: center;
+      appearance: button;
+      align-items: center;
+      justify-content: center;
+      margin-right: 10px;
+    }
+
+    .btn-follow:hover {
+      transform: scale(0.98);
+    }
+
+    .btn-unfollow {
+      padding: 10px 20px;
+      border-radius: 5px;
+      background: $orangecol;
+      color: white;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      text-align: center;
+      appearance: button;
+      align-items: center;
+      justify-content: center;
+      margin-right: 10px;
+    }
+
+    .btn-unfollow {
+      transform: scale(0.98);
     }
   }
 
   .info {
-    align-items: center;
+    margin: 20px 0;
 
     ul {
       display: flex;
-      justify-content: center;
-      align-content: center;
+      flex-direction: column;
 
       li {
         padding: 10px;
+        align-self: flex-start;
 
         span {
           margin-left: 5px;
@@ -425,34 +476,31 @@ li {
       }
     }
   }
+}
 
-  .btn-follow {
-    padding: 10px 20px;
-    border-radius: 5px;
-    background: $blackcol;
-    color: white;
-    font-size: 16px;
-    font-weight: 500;
-    cursor: pointer;
-    text-align: center;
-    appearance: button;
-    align-items: center;
-    justify-content: center;
-    margin-right: 10px;
+.more {
+  margin: 30px 0;
+  border: 1px solid #e6e6e6;
+  padding: 10px;
+  border-radius: 5px;
+  label {
+    text-align: left;
+    display: block;
+    margin: 0 0 5px 3px;
+    border-bottom: 1px solid #e6e6e6;
   }
+  span {
+    margin: 0 0 5px 3px;
+  }
+}
 
-  .btn-unfollow {
-    padding: 10px 20px;
-    border-radius: 5px;
-    background: $orangecol;
-    color: white;
-    font-size: 16px;
-    font-weight: 500;
-    cursor: pointer;
-    text-align: center;
-    appearance: button;
-    align-items: center;
-    justify-content: center;
-    margin-right: 10px;
+.more-ul {
+  ul {
+    display: flex;
+    flex-direction: column;
+    li {
+      align-self: flex-start;
+      margin-left: 50vh;
+    }
   }
 }
