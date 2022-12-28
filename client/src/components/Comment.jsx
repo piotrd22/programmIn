@@ -1,12 +1,14 @@
 import { TiDelete, TiRefresh } from "react-icons/ti";
 import { useDispatch, useSelector } from "react-redux";
 import { uncommentPost } from "../features/post/postSlice";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import CommentUpdateForm from "./CommentUpdateForm";
+import axios from "axios";
 
 function Comment({ comment, post, del, update }) {
   const [isUpdating, setIsUpdating] = useState(false);
+  const [username, setUsername] = useState("");
 
   const { user } = useSelector((state) => state.auth);
 
@@ -16,6 +18,25 @@ function Comment({ comment, post, del, update }) {
     postId: post._id,
     desc: comment.desc,
     id: comment.id,
+  };
+
+  useEffect(() => {
+    fetchUser().then((res) => setUsername(`${res.name} ${res.surname}`));
+  });
+
+  const fetchUser = async () => {
+    const config = {
+      headers: {
+        token: "Bearer " + user.token,
+      },
+    };
+
+    const res = await axios.get(
+      `http://localhost:8080/api/users/${comment.postedBy}`,
+      config
+    );
+
+    return res.data;
   };
 
   const handleDelete = () => {
@@ -36,7 +57,7 @@ function Comment({ comment, post, del, update }) {
   return (
     <div>
       <div className="comment">
-        <Link to={`/profile/${comment.postedBy}`}>{comment.username}</Link>
+        <Link to={`/profile/${comment.postedBy}`}>{username}</Link>
         <p>{comment.desc}</p>
         {comment.postedBy === user._id ? (
           <div>

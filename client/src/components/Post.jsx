@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import PostUpdateForm from "./PostUpdateForm";
 import CommentForm from "./CommentForm";
 import Comment from "./Comment";
+import axios from "axios";
 
 function Post({ post }) {
   const [like, setLike] = useState(post.likes.length);
@@ -16,6 +17,7 @@ function Post({ post }) {
   const [isCommenting, setIsCommenting] = useState(false);
   const [commentLen, setCommentLen] = useState(post.comments.length);
   const [comments, setComments] = useState([]);
+  const [username, setUsername] = useState("");
   const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
@@ -41,6 +43,25 @@ function Post({ post }) {
         alert(error);
       });
   }, [dispatch, post._id]);
+
+  useEffect(() => {
+    fetchUser().then((res) => setUsername(`${res.name} ${res.surname}`));
+  });
+
+  const fetchUser = async () => {
+    const config = {
+      headers: {
+        token: "Bearer " + user.token,
+      },
+    };
+
+    const res = await axios.get(
+      `http://localhost:8080/api/users/${post.userId}`,
+      config
+    );
+
+    return res.data;
+  };
 
   const likeHandler = () => {
     dispatch(likePost(post._id))
@@ -81,7 +102,7 @@ function Post({ post }) {
       <div className="post">
         <div className="post-div">
           <div>
-            <Link to={`/profile/${post.userId}`}>{post.username}</Link>
+            <Link to={`/profile/${post.userId}`}>{username}</Link>
             <p className="date">{post.createdAt.slice(0, 10)}</p>
           </div>
           {user._id === post.userId && (
