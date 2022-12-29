@@ -65,6 +65,8 @@ function ProfileUpdate() {
     if (values.date) {
       if (!checkingDate(values.date)) {
         errors.date = "The date cannot be later than today!";
+      } else {
+        errors.date = "";
       }
     }
 
@@ -291,7 +293,7 @@ function ProfileUpdate() {
               type="date"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              value={formik.values.date}
+              value={formik.values.date.slice(0, 10)}
             />
           </div>
           {formik.errors.date === "The date cannot be later than today!" ? (

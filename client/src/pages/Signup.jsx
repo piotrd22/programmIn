@@ -57,6 +57,8 @@ function Signup() {
     if (values.date) {
       if (!checkingDate(values.date)) {
         errors.date = "The date cannot be later than today!";
+      } else {
+        errors.date = "";
       }
     }
 
