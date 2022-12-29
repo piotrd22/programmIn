@@ -5,6 +5,7 @@ import {
   FaSignInAlt,
   FaSignOutAlt,
   FaHome,
+  FaSearch,
 } from "react-icons/fa";
 import { AiFillWechat } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
@@ -33,6 +34,11 @@ function Header() {
             <li>
               <Link to="/feed">
                 <FaHome /> Home
+              </Link>
+            </li>
+            <li>
+              <Link to="/search">
+                <FaSearch /> Search
               </Link>
             </li>
             <li>

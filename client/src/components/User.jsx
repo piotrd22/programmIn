@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
 
-function Follower({ id }) {
+function User({ id }) {
   const [user, setUser] = useState("");
   const { user: curruser } = useSelector((state) => state.auth);
 
@@ -28,4 +28,4 @@ function Follower({ id }) {
   return <div>{user}</div>;
 }
 
-export default Follower;
+export default User;

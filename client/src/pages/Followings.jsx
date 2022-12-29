@@ -3,7 +3,7 @@ import { FaUserAlt } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { getUserFollowing } from "../features/user/userSlice";
-import Follower from "../components/Follower";
+import User from "../components/User";
 
 function Followers() {
   const id = useParams().id;
@@ -34,7 +34,7 @@ function Followers() {
               return (
                 <li key={index}>
                   <Link to={`/profile/${follower}`}>
-                    <Follower id={follower} />
+                    <User id={follower} />
                   </Link>
                 </li>
               );

@@ -53,6 +53,15 @@ li {
   line-height: 2.2;
 }
 
+input {
+  width: 30%;
+  padding: 10px;
+  border: 1px solid #e6e6e6;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  font-family: inherit;
+}
+
 input::file-selector-button {
   font-weight: bold;
   color: white;
@@ -511,4 +520,20 @@ input::file-selector-button {
   border: 1px solid #e6e6e6;
   padding: 10px;
   border-radius: 5px;
+}
+
+.user-search {
+  display: flex;
+  justify-content: space-around;
+  margin: 20px;
+  border: 1px solid #e6e6e6;
+  padding: 10px;
+  border-radius: 5px;
+  align-items: center;
+
+  img {
+    height: 7vh;
+    width: 10vh;
+    border-radius: 5px;
+  }
 }

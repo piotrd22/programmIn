@@ -17,6 +17,7 @@ import ProfileUpdate from "./pages/ProfileUpdate";
 import More from "./pages/More";
 import Followers from "./pages/Followers";
 import Followings from "./pages/Followings";
+import Search from "./pages/Search";
 
 function App() {
   const { user } = useSelector((state) => state.auth);
@@ -42,6 +43,10 @@ function App() {
             <Route
               path="/feed"
               element={user ? <Feed /> : <Navigate to="/" />}
+            />
+            <Route
+              path="/search"
+              element={user ? <Search /> : <Navigate to="/" />}
             />
             <Route
               path="/profile/:id"
