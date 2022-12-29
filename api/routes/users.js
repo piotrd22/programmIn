@@ -2,6 +2,8 @@ const router = require("express").Router();
 const usersControllers = require("../controllers/usersControllers");
 const verifyToken = require("../middleware/verifyToken");
 
+router.get("/search", usersControllers.searchUsers);
+
 router.get("/:id", usersControllers.getUser);
 
 router.put("/:id", verifyToken, usersControllers.updateUser);

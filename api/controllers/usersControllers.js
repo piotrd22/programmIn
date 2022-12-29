@@ -163,6 +163,29 @@ const getUserFollowing = async (req, res) => {
   }
 };
 
+const searchUsers = async (req, res) => {
+  try {
+    const { keyword } = req.query;
+
+    const users = await User.aggregate([
+      {
+        $project: {
+          username: { $concat: ["$name", " ", "$surname"] },
+          email: 1,
+          name: 1,
+          surname: 1,
+          profilePicture: 1,
+        },
+      },
+      { $match: { username: { $regex: new RegExp(keyword), $options: "i" } } },
+    ]);
+
+    res.status(200).send(users);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
+
 module.exports = {
   getUser,
   updateUser,
@@ -171,4 +194,5 @@ module.exports = {
   unfollowUser,
   getUserFollowers,
   getUserFollowing,
+  searchUsers,
 };
