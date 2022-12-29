@@ -70,10 +70,10 @@ function More() {
                 </a>
               </li>
             )}
-            {user.email && (
+            {user.phone && (
               <li>
                 <FaPhone />
-                <span>{user.email}</span>
+                <span>{user.phone}</span>
               </li>
             )}
           </ul>
@@ -85,10 +85,10 @@ function More() {
               <FaTransgenderAlt />
               <span>{user.gender}</span>
             </li>
-            {user.githuburl && (
+            {user.date && (
               <li>
                 <FaBirthdayCake />
-                <span>{user.githuburl}</span>
+                <span>{user.date.slice(0, 10)}</span>
               </li>
             )}
           </ul>

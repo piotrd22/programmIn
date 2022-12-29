@@ -55,11 +55,12 @@ li {
 
 input::file-selector-button {
   font-weight: bold;
-  color: $orangecol;
+  color: white;
   padding: 0.5em;
   border: 1px solid #e6e6e6;
   border-radius: 3px;
   cursor: pointer;
+  background-color: $disablecol;
 }
 
 .container {

@@ -27,6 +27,18 @@ function ProfileUpdate() {
       });
   }, [id, dispatch]);
 
+  const checkingDate = (date) => {
+    const data_arr = date.split("-");
+    const today = new Date();
+    if (
+      today.getFullYear() >= +data_arr[0] &&
+      today.getMonth() + 1 >= +data_arr[1] &&
+      today.getDate() > +data_arr[2]
+    ) {
+      return true;
+    } else return false;
+  };
+
   const validate = (values) => {
     const errors = {};
 
@@ -44,6 +56,16 @@ function ProfileUpdate() {
 
     if (!values.surname) {
       errors.surname = "Required";
+    }
+
+    if (!values.date) {
+      errors.date = "Required";
+    }
+
+    if (values.date) {
+      if (!checkingDate(values.date)) {
+        errors.date = "The date cannot be later than today!";
+      }
     }
 
     if (values.password) {
@@ -69,8 +91,10 @@ function ProfileUpdate() {
     surname: user.surname,
     email: user.email,
     password: "",
+    date: user.date,
     gender: user.gender,
     nationality: user.nationality,
+    phone: user.phone,
     experience: user.experience,
     skills: user.skills,
     education: user.education,
@@ -260,6 +284,23 @@ function ProfileUpdate() {
             ) : null}
           </div>
           <div className="form-group">
+            <label htmlFor="date">Date of Birth</label>
+            <input
+              id="date"
+              name="date"
+              type="date"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.date}
+            />
+          </div>
+          {formik.errors.date === "The date cannot be later than today!" ? (
+            <div className="error-message">
+              {formik.errors.date}
+              <p className="error-sub">Check entered date</p>
+            </div>
+          ) : null}
+          <div className="form-group">
             <label htmlFor="gedner">Gender</label>
             <select
               name="gender"
@@ -332,6 +373,17 @@ function ProfileUpdate() {
                 }
               })}
             </select>
+          </div>
+          <div className="form-group">
+            <label htmlFor="phone">Phone Number</label>
+            <input
+              id="phone"
+              name="phone"
+              type="text"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.phone}
+            />
           </div>
           <div className="form-group">
             <label htmlFor="city">City And Postal Code</label>

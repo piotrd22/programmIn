@@ -15,6 +15,18 @@ function Signup() {
 
   const { isLoading } = useSelector((state) => state.auth);
 
+  const checkingDate = (date) => {
+    const data_arr = date.split("-");
+    const today = new Date();
+    if (
+      today.getFullYear() >= +data_arr[0] &&
+      today.getMonth() + 1 >= +data_arr[1] &&
+      today.getDate() > +data_arr[2]
+    ) {
+      return true;
+    } else return false;
+  };
+
   const validate = (values) => {
     const errors = {};
 
@@ -36,6 +48,16 @@ function Signup() {
 
     if (!values.surname) {
       errors.surname = "Required";
+    }
+
+    if (!values.date) {
+      errors.date = "Required";
+    }
+
+    if (values.date) {
+      if (!checkingDate(values.date)) {
+        errors.date = "The date cannot be later than today!";
+      }
     }
 
     if (!values.password) {
@@ -70,6 +92,7 @@ function Signup() {
       surname: "",
       email: "",
       password: "",
+      date: "",
       gender: "",
       nationality: "",
       checkbox: false,
@@ -161,6 +184,23 @@ function Signup() {
               </div>
             ) : null}
           </div>
+          <div className="form-group">
+            <label htmlFor="date">Date of Birth*</label>
+            <input
+              id="date"
+              name="date"
+              type="date"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.date}
+            />
+          </div>
+          {formik.errors.date === "The date cannot be later than today!" ? (
+            <div className="error-message">
+              {formik.errors.date}
+              <p className="error-sub">Check entered date</p>
+            </div>
+          ) : null}
           <div className="form-group">
             <fieldset>
               <legend>Select gender*</legend>
