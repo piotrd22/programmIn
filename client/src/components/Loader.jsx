@@ -6,8 +6,8 @@ function Loader() {
       src={spinner}
       alt="Loading..."
       style={{
-        width: "50vh",
-        height: "50vh",
+        width: "20vh",
+        height: "20vh",
         margin: "auto",
         marginTop: "20vh",
         display: "block",
