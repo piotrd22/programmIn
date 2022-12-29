@@ -25,6 +25,9 @@ const UserSchema = new Schema(
       required: true,
       min: 8,
     },
+    date: {
+      type: Date,
+    },
     gender: {
       type: String,
       required: true,
@@ -33,6 +36,10 @@ const UserSchema = new Schema(
       type: String,
       default: "",
       required: true,
+    },
+    phone: {
+      type: String,
+      max: 20,
     },
     experience: {
       type: String,
