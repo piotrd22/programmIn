@@ -28,15 +28,9 @@ function ProfileUpdate() {
   }, [id, dispatch]);
 
   const checkingDate = (date) => {
-    const data_arr = date.split("-");
     const today = new Date();
-    if (
-      today.getFullYear() >= +data_arr[0] &&
-      today.getMonth() + 1 >= +data_arr[1] &&
-      today.getDate() > +data_arr[2]
-    ) {
-      return true;
-    } else return false;
+    if (date.getTime() <= today.getTime()) return true;
+    else return false;
   };
 
   const validate = (values) => {
@@ -65,8 +59,6 @@ function ProfileUpdate() {
     if (values.date) {
       if (!checkingDate(values.date)) {
         errors.date = "The date cannot be later than today!";
-      } else {
-        errors.date = "";
       }
     }
 

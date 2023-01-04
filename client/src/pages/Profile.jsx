@@ -17,7 +17,8 @@ function Profile() {
   const { user, isLoading } = useSelector((state) => state.user);
   const { posts } = useSelector((state) => state.post);
 
-  const [followersLen, setFollowersLen] = useState(user.followers.length);
+  const [followersLen, setFollowersLen] = useState(0);
+  const [followingLen, setFollowingLen] = useState(0);
   const [isFollowed, setIsFollowed] = useState(false);
 
   useEffect(() => {
@@ -31,6 +32,10 @@ function Profile() {
   useEffect(() => {
     dispatch(getUser(id))
       .unwrap()
+      .then((res) => {
+        setFollowersLen(res.followers.length);
+        setFollowingLen(res.following.length);
+      })
       .catch((error) => {
         alert(error);
       });
@@ -116,7 +121,7 @@ function Profile() {
             Followers {followersLen}
           </Link>
           <Link to={`/profile/${user._id}/followings`}>
-            Following {user.following.length}
+            Following {followingLen}
           </Link>
         </div>
         <div className="button">
