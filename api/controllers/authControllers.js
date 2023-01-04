@@ -4,7 +4,8 @@ const User = require("../schemas/UserSchema");
 
 const signup = async (req, res) => {
   try {
-    const { name, surname, email, password, gender, nationality } = req.body;
+    const { name, surname, email, password, gender, nationality, date } =
+      req.body;
 
     if ((await User.find({ email: email })).length === 1) {
       return res.status(405).send("Email is already taken");
@@ -20,6 +21,7 @@ const signup = async (req, res) => {
       password: hashedPassw,
       gender: gender,
       nationality: nationality,
+      date: date,
     });
 
     await newUser.save();
