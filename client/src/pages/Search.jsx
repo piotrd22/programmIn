@@ -6,16 +6,22 @@ function Search() {
   const [query, setQuery] = useState("");
   const [users, setUsers] = useState([]);
 
-  useEffect(() => {
-    if (query.length > 2) fetchData();
-  }, [query]);
-
   const fetchData = async () => {
     const res = await axios.get(
       `http://localhost:8080/api/users/search?keyword=${query}`
     );
     setUsers(res.data);
   };
+
+  useEffect(() => {
+    if (query.length > 2) {
+      const getData = setTimeout(() => {
+        fetchData();
+      }, 500);
+
+      return () => clearTimeout(getData);
+    }
+  }, [query]);
 
   return (
     <div>
