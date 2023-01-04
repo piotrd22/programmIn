@@ -120,6 +120,7 @@ function Post({ post }) {
               crossOrigin="anonymous"
               src={`http://localhost:8080/images/${post.image}`}
               alt="Post"
+              style={{ maxHeight: 450 }}
             />
           )}
         </div>
