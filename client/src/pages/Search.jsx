@@ -21,6 +21,7 @@ function Search() {
 
       return () => clearTimeout(getData);
     }
+    //eslint-disable-next-line
   }, [query]);
 
   return (
