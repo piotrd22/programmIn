@@ -42,7 +42,7 @@ function Header() {
               </Link>
             </li>
             <li>
-              <Link>
+              <Link to="/chat">
                 <AiFillWechat /> Chat
               </Link>
             </li>
