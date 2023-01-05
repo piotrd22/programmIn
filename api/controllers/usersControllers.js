@@ -148,7 +148,8 @@ const unfollowUser = async (req, res) => {
 const getUserFollowers = async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
-    res.status(200).send(user.followers);
+    const userFollowers = await User.find({ _id: { $in: user.followers } });
+    res.status(200).send(userFollowers);
   } catch (error) {
     res.status(500).send(error);
   }
@@ -157,7 +158,8 @@ const getUserFollowers = async (req, res) => {
 const getUserFollowing = async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
-    res.status(200).send(user.following);
+    const userFollowing = await User.find({ _id: { $in: user.following } });
+    res.status(200).send(userFollowing);
   } catch (error) {
     res.status(500).send(error);
   }
