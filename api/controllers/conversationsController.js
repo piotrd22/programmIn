@@ -15,9 +15,9 @@ const createConv = async (req, res) => {
 
 const getConv = async (req, res) => {
   try {
-    const conv = await Conversation.aggregate([
-      { $match: { members: { $in: [req.params.id] } } },
-    ]);
+    const conv = await Conversation.find({
+      members: { $in: [req.params.id] },
+    });
     res.status(200).send(conv);
   } catch (error) {
     res.status(500).send(error);
@@ -26,9 +26,11 @@ const getConv = async (req, res) => {
 
 const getThisConv = async (req, res) => {
   try {
-    const conv = await Conversation.aggregate({
-      $match: { member: { $all: [req.params.firstId, req.params.secondId] } },
+    const conv = await Conversation.findOne({
+      members: { $all: [req.params.firstId, req.params.secondId] },
     });
+    if (!conv) return res.status(404).send("404");
+
     res.status(200).send(conv);
   } catch (error) {
     res.status(500).send(error);
