@@ -17,7 +17,7 @@ function Signup() {
 
   const checkingDate = (date) => {
     const today = new Date();
-    if (date.getTime() <= today.getTime()) return true;
+    if (new Date(date).getTime() <= today.getTime()) return true;
     else return false;
   };
 

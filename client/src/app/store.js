@@ -3,6 +3,7 @@ import jwt_decode from "jwt-decode";
 import authReducer from "../features/auth/authSlice";
 import postReducer from "../features/post/postSlice";
 import userReducer from "../features/user/userSlice";
+import conversationReducer from "../features/conversation/conversationSlice";
 
 const refreshPage = () => window.location.reload();
 
@@ -24,6 +25,7 @@ export const store = configureStore({
     auth: authReducer,
     post: postReducer,
     user: userReducer,
+    conversation: conversationReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

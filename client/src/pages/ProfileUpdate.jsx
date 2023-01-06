@@ -29,7 +29,8 @@ function ProfileUpdate() {
 
   const checkingDate = (date) => {
     const today = new Date();
-    if (date.getTime() <= today.getTime()) return true;
+    console.log(date);
+    if (new Date(date).getTime() <= today.getTime()) return true;
     else return false;
   };
 
