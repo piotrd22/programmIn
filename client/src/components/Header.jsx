@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import {
   FaUserAlt,
   FaInfo,
@@ -6,6 +6,7 @@ import {
   FaSignOutAlt,
   FaHome,
   FaSearch,
+  FaListAlt,
 } from "react-icons/fa";
 import { AiFillWechat } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
@@ -17,6 +18,8 @@ function Header() {
   const dispatch = useDispatch();
 
   const { user } = useSelector((state) => state.auth);
+
+  const [res, setRes] = useState(true);
 
   const logoutHandler = () => {
     dispatch(logout());
@@ -30,7 +33,7 @@ function Header() {
           <Link to="/feed">
             <h4>ProgrammIn</h4>
           </Link>
-          <ul>
+          <ul className={`${res}`}>
             <li>
               <Link to="/feed">
                 <FaHome /> Home
@@ -57,6 +60,9 @@ function Header() {
               </Link>
             </li>
           </ul>
+          <button className="res" onClick={() => setRes(!res)}>
+            <FaListAlt size={32} />
+          </button>
         </>
       ) : (
         <>

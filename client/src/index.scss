@@ -92,6 +92,10 @@ input::file-selector-button {
   border-bottom: 1px solid $blackcol;
   margin-bottom: 20px;
 
+  .res {
+    display: none;
+  }
+
   ul {
     display: flex;
     align-items: center;
@@ -614,6 +618,97 @@ input::file-selector-button {
     textarea {
       width: 80%;
       resize: none;
+    }
+  }
+}
+
+@media (max-width: 660px) {
+  * {
+    font-size: small;
+  }
+
+  .form-post {
+    width: 70%;
+  }
+
+  .post {
+    width: 70%;
+  }
+
+  .btn {
+    font-size: 10px;
+  }
+
+  input::file-selector-button {
+    font-size: 10px;
+  }
+
+  .btn-post {
+    font-size: 10px;
+  }
+
+  .btn-comment {
+    font-size: 8px;
+  }
+  .header {
+    .true {
+      display: none;
+    }
+    .res {
+      display: block;
+      border: none;
+      background-color: white;
+      cursor: pointer;
+    }
+    .res:hover {
+      color: $hovercol;
+    }
+    .false {
+      display: block;
+      flex-direction: column;
+      font-size: small;
+    }
+  }
+
+  .user {
+    .back-photo {
+      img {
+        width: 50vh;
+        height: 20vh;
+        border-radius: 10px;
+      }
+    }
+
+    .profile-photo {
+      img {
+        width: 20vh;
+        height: 20vh;
+      }
+    }
+
+    .name-surname {
+      position: relative;
+      bottom: 5vh;
+      font-size: large;
+    }
+
+    .desc {
+      width: 40vh;
+      font-size: small;
+    }
+
+    .followers {
+      font-size: small;
+    }
+
+    .button {
+      .btn-follow {
+        font-size: 10px;
+      }
+
+      .btn-unfollow {
+        font-size: 10px;
+      }
     }
   }
 }
