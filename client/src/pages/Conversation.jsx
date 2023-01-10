@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { BsFillChatFill } from "react-icons/bs";
 import Message from "../components/Message";
 import axios from "axios";
+import { io } from "socket.io-client";
 import { getMess, createMess } from "../features/message/messageSlice";
 import {
   getThisConv,
@@ -15,9 +16,12 @@ function Conversation() {
   const secondId = useParams().secondId;
 
   const [convId, setConvId] = useState("");
+  const [chat, setChat] = useState({});
   const [usernameSecond, setUsernameSecond] = useState("");
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
+  const [messageToSocket, setMessageToSocket] = useState(null);
+  const socket = useRef();
 
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
@@ -45,14 +49,44 @@ function Conversation() {
   }, []);
 
   useEffect(() => {
+    socket.current = io("ws://localhost:9000");
+  }, []);
+
+  useEffect(() => {
+    socket.current.emit("addUser", user._id);
+  }, [user._id]);
+
+  useEffect(() => {
+    socket.current.on("getMessage", (msg) => {
+      setMessageToSocket({
+        sender: msg.senderId,
+        text: msg.text,
+        createdAt: Date.now(),
+      });
+    });
+  }, []);
+
+  useEffect(() => {
+    messageToSocket &&
+      chat?.members.includes(messageToSocket.sender) &&
+      setMessages((prev) => [...prev, messageToSocket]);
+  }, [messageToSocket, chat]);
+
+  useEffect(() => {
     dispatch(getThisConv([firstId, secondId]))
       .unwrap()
-      .then((res) => setConvId(res._id))
+      .then((res) => {
+        setChat(res);
+        setConvId(res._id);
+      })
       .catch((error) => {
         if (error.response.status === 404) {
           dispatch(createConv([firstId, secondId]))
             .unwrap()
-            .then((res) => setConvId(res._id))
+            .then((res) => {
+              setChat(res);
+              setConvId(res._id);
+            })
             .catch((error) => {
               alert(error);
             });
@@ -80,6 +114,12 @@ function Conversation() {
       text: newMessage,
       convId: convId,
     };
+
+    socket.current.emit("sendMessage", {
+      senderId: user._id,
+      receiverId: secondId,
+      text: newMessage,
+    });
 
     dispatch(createMess(messageToSend))
       .unwrap()

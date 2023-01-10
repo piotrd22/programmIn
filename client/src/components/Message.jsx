@@ -1,4 +1,4 @@
-import { format } from "timeago.js";
+import moment from "moment";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
@@ -24,12 +24,14 @@ function Message({ message, bool }) {
 
   useEffect(() => {
     fetchUser().then((res) => setUsername(`${res.name} ${res.surname}`));
+    //eslint-disable-next-line
   }, []);
+
   return (
     <div className={bool ? "my-mess" : "nm-mess"}>
       <div className="top">
         <p>{username}</p>
-        <p>{format(message.createdAt)}</p>
+        <p>{moment(message.createdAt).fromNow()}</p>
       </div>
       <div className="bottom">
         <p>{message.text}</p>
