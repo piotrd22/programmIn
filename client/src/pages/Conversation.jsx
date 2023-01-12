@@ -49,7 +49,7 @@ function Conversation() {
   }, []);
 
   useEffect(() => {
-    socket.current = io("ws://localhost:9000");
+    socket.current = io("ws://localhost:8900");
   }, []);
 
   useEffect(() => {
