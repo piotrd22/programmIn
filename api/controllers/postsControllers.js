@@ -183,7 +183,7 @@ const getComments = async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
     res.status(200).send(post.comments);
-  } catch {
+  } catch (error) {
     res.status(500).send(error);
   }
 };

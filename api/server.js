@@ -46,10 +46,14 @@ app.post("/api/upload", upload.single("file"), (req, res) => {
 const usersRouter = require("./routes/users");
 const authRouter = require("./routes/auth");
 const postsRoter = require("./routes/posts");
+const conversationsRouter = require("./routes/conversations");
+const messagesRouter = require("./routes/messages");
 
 app.use("/api/users", usersRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/posts", postsRoter);
+app.use("/api/conversations", conversationsRouter);
+app.use("/api/messages", messagesRouter);
 
 mongoose.connect(process.env.DATABASE_URL, () => {
   console.log("Connected with DB! :)");

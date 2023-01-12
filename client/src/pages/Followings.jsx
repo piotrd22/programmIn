@@ -1,14 +1,16 @@
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { FaUserAlt } from "react-icons/fa";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getUserFollowing } from "../features/user/userSlice";
-import User from "../components/User";
+import UsersTable from "../components/UsersTable";
+import Loader from "../components/Loader";
 
-function Followers() {
+function Followings() {
   const id = useParams().id;
   const [followers, setUserFollowers] = useState([]);
   const dispatch = useDispatch();
+  const { isLoading } = useSelector((state) => state.user);
 
   useEffect(() => {
     dispatch(getUserFollowing(id))
@@ -19,6 +21,8 @@ function Followers() {
       });
   }, [id, dispatch]);
 
+  if (isLoading) return <Loader />;
+
   return (
     <div>
       <section className="heading">
@@ -27,23 +31,9 @@ function Followers() {
         </h1>
       </section>
 
-      <section>
-        <div className="followers-list">
-          <ul>
-            {followers.map((follower, index) => {
-              return (
-                <li key={index}>
-                  <Link to={`/profile/${follower}`}>
-                    <User id={follower} />
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-      </section>
+      <UsersTable users={followers} />
     </div>
   );
 }
 
-export default Followers;
+export default Followings;

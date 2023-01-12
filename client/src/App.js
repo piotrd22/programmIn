@@ -18,6 +18,8 @@ import More from "./pages/More";
 import Followers from "./pages/Followers";
 import Followings from "./pages/Followings";
 import Search from "./pages/Search";
+import ChatSearch from "./pages/ChatSearch";
+import Conversation from "./pages/Conversation";
 
 function App() {
   const { user } = useSelector((state) => state.auth);
@@ -47,6 +49,14 @@ function App() {
             <Route
               path="/search"
               element={user ? <Search /> : <Navigate to="/" />}
+            />
+            <Route
+              path="/chat"
+              element={user ? <ChatSearch /> : <Navigate to="/" />}
+            />
+            <Route
+              path="/chat/:firstId/:secondId"
+              element={user ? <Conversation /> : <Navigate to="/" />}
             />
             <Route
               path="/profile/:id"
