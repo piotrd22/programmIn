@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useLayoutEffect, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { BsFillChatFill } from "react-icons/bs";
@@ -132,7 +132,7 @@ function Conversation() {
       });
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 

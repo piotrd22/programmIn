@@ -100,10 +100,9 @@ function Signup() {
           navigate("/");
         })
         .catch((error) => {
-          const arr = error.message.split(" ");
-          const res_status = arr[arr.length - 1];
-          if (res_status === "405") setError(true);
-          else alert(error.message);
+          if (error.response) {
+            if (error.response.status === 405) setError(true);
+          } else alert(error);
         });
     },
   });

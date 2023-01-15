@@ -20,22 +20,10 @@ function Signin() {
 
     if (!values.password) {
       errors.password = "Required";
-    } else if (
-      !/(?=^.{6,}$)(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[^A-Za-z0-9]).*/.test(
-        values.password
-      )
-    ) {
-      errors.password = "Use Stronger Password";
     }
-
     if (!values.email) {
       errors.email = "Required";
-    } else if (
-      !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)
-    ) {
-      errors.email = "Incorrect email format";
     }
-
     return errors;
   };
 
@@ -59,14 +47,14 @@ function Signin() {
           navigate("/feed");
         })
         .catch((error) => {
-          const arr = error.split(" ");
-          const res_status = arr[arr.length - 1];
-          if (res_status === "404") {
-            setErrorEmail(true);
-            setErrorPassw(false);
-          } else if (res_status === "409") {
-            setErrorPassw(true);
-            setErrorEmail(false);
+          if (error.response) {
+            if (error.response.status === 404) {
+              setErrorEmail(true);
+              setErrorPassw(false);
+            } else if (error.response.status === 409) {
+              setErrorPassw(true);
+              setErrorEmail(false);
+            }
           } else alert(error);
         });
     },
@@ -94,9 +82,6 @@ function Signin() {
               onChange={formik.handleChange}
               value={formik.values.email}
             />
-            {formik.errors.email === "Incorrect email format" ? (
-              <div className="error-message">{formik.errors.email}</div>
-            ) : null}
           </div>
           <div className="form-group">
             <label htmlFor="password">Password*</label>
@@ -107,15 +92,6 @@ function Signin() {
               onChange={formik.handleChange}
               value={formik.values.password}
             />
-            {formik.errors.password === "Use Stronger Password" ? (
-              <div className="error-message">
-                {formik.errors.password}
-                <p className="error-sub">
-                  The password should contain at least 1 capital letter, 1
-                  special character, 1 number and be at least 6 characters long
-                </p>
-              </div>
-            ) : null}
           </div>
           {errorEmail && <div className="error-message">User not found</div>}
           {errorPassw && <div className="error-message">Wrong password</div>}
