@@ -29,7 +29,6 @@ function ProfileUpdate() {
 
   const checkingDate = (date) => {
     const today = new Date();
-    console.log(date);
     if (new Date(date).getTime() <= today.getTime()) return true;
     else return false;
   };
@@ -51,10 +50,6 @@ function ProfileUpdate() {
 
     if (!values.surname) {
       errors.surname = "Required";
-    }
-
-    if (!values.date) {
-      errors.date = "Required";
     }
 
     if (values.date) {
@@ -86,7 +81,7 @@ function ProfileUpdate() {
     surname: user.surname,
     email: user.email,
     password: "",
-    date: user.date,
+    date: "",
     gender: user.gender,
     nationality: user.nationality,
     phone: user.phone,
@@ -130,10 +125,9 @@ function ProfileUpdate() {
         refreshPage();
       })
       .catch((error) => {
-        const error_array = error.split(" ");
-        const status = error_array[error_array.length - 1];
-        if (status === "405") setError(true);
-        else alert(error);
+        if (error.response.status) {
+          if (error.response.status === 405) setError(true);
+        } else alert(error);
       });
   };
 
@@ -286,7 +280,7 @@ function ProfileUpdate() {
               type="date"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              value={formik.values.date.slice(0, 10)}
+              value={formik.values.date}
             />
           </div>
           {formik.errors.date === "The date cannot be later than today!" ? (

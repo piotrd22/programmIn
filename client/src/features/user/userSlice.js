@@ -29,9 +29,7 @@ export const updateUser = createAsyncThunk(
       const token = thunkAPI.getState().auth.user.accessToken;
       return await userService.updateUser(userData._id, userData, token);
     } catch (error) {
-      const message =
-        error.response?.data?.message || error.message || error.toString();
-      return thunkAPI.rejectWithValue(message);
+      return thunkAPI.rejectWithValue(error);
     }
   }
 );

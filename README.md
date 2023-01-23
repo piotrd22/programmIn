@@ -1,3 +1,13 @@
-# programmIn Piotr Damrych
+# programmIn
 
-This project aims to create a linkedin-like application using the classic MERN stack
+In this project I created a social networking site with a chat function using the classic MERN stack.
+
+Frontend:
+
+- JS/React/Redux
+- SCSS
+
+Backend:
+
+- Node.js/Express
+- MongoDB
